@@ -36,7 +36,6 @@ public class SQLiteConnect {
             while ((line = reader.readLine()) != null) {
                 line = line.trim();
 
-                // Skip comments and empty lines
                 if (line.isEmpty() ) {
                     continue;
                 }
