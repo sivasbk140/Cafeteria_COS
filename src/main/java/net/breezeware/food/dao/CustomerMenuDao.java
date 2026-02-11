@@ -8,7 +8,7 @@ import java.util.List;
 
 public class CustomerMenuDao {
 
-    private final String DB_URL = "jdbc:sqlite:C:/Users/preet/Cafeteria_COS/Backend/cafeteria.db";
+    private final String DB_URL = "jdbc:sqlite:/home/sivabalakrishnan/sivasbk/Cafeteria_COS/cafeteria.db";
 
 
 
