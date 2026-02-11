@@ -1,15 +1,13 @@
 package net.breezeware.order.entity;
 
 import java.time.Instant;
-import java.time.LocalDateTime;
 
 public class Order {
-int  id;
-int user_id;
-OrderStatus status;
-Instant createdOn ;
-Instant updatedOn ;
 
+    private int id;
+    private int userId;
+    private OrderStatus status;
+    private Instant createdOn;
 
     public int getId() {
         return id;
@@ -19,12 +17,12 @@ Instant updatedOn ;
         this.id = id;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public OrderStatus getStatus() {
@@ -41,13 +39,5 @@ Instant updatedOn ;
 
     public void setCreatedOn(Instant createdOn) {
         this.createdOn = createdOn;
-    }
-
-    public Instant getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public void setUpdatedOn(Instant updatedOn) {
-        this.updatedOn = updatedOn;
     }
 }

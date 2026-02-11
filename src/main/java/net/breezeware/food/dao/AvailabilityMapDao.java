@@ -9,10 +9,12 @@ import java.sql.SQLException;
 
 public class AvailabilityMapDao {
 
-    public void setAvailability(int menuId, MenuDay day) throws SQLException {
+    public void add(int menuId, MenuDay day) throws SQLException {
+
         String sql = """
-            INSERT INTO Availability_Map (menu_id, menu_day, created_on)
-            VALUES (?, ?, TIMESTAMP)
+            INSERT INTO Availability_Map
+            (menu_id, menu_day, created_on)
+            VALUES (?, ?, CURRENT_TIMESTAMP)
         """;
 
         try (Connection con = DBConnection.getConnection();

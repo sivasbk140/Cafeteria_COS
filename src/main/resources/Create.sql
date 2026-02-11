@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS Food_Item (
                                          price REAL NOT NULL,
                                          quantity INTEGER,
                                          category TEXT NOT NULL,
-                                         decription TEXT NOT NULL,
+                                         description TEXT NOT NULL,
                                          created_on  TIMESTAMP,
                                          updated_on  TIMESTAMP
 );

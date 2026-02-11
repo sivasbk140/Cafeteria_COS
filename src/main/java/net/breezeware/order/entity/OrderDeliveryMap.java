@@ -3,11 +3,11 @@ package net.breezeware.order.entity;
 import java.time.Instant;
 
 public class OrderDeliveryMap {
+
    private int id;
    private int orderId;
    private int deliveryId;
-   private   Instant createdOn ;
-   private   Instant updatedOn ;
+   private Instant createdOn;
 
    public int getId() {
       return id;
@@ -31,21 +31,5 @@ public class OrderDeliveryMap {
 
    public void setDeliveryId(int deliveryId) {
       this.deliveryId = deliveryId;
-   }
-
-   public Instant getCreatedOn() {
-      return createdOn;
-   }
-
-   public void setCreatedOn(Instant createdOn) {
-      this.createdOn = createdOn;
-   }
-
-   public Instant getUpdatedOn() {
-      return updatedOn;
-   }
-
-   public void setUpdatedOn(Instant updatedOn) {
-      this.updatedOn = updatedOn;
    }
 }
