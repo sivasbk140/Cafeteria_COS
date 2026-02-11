@@ -11,7 +11,7 @@ public class FoodItemDao {
 
         String sql =
                 "INSERT INTO Food_Item (name, price, category,description, quantity, created_on) " +
-                        "VALUES (?, ?, ?, CURRENT_TIMESTAMP)";
+                        "VALUES (?, ?, ?, ?, ?, CURRENT_TIMESTAMP)";
 
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps =
@@ -36,7 +36,7 @@ public class FoodItemDao {
     }
 
 
-    public void delete(int foodItemId) {
+    public void  delete(int foodItemId) {
 
         String sql = "DELETE FROM Food_Item WHERE id = ?";
 
