@@ -1,84 +1,144 @@
 package net.breezeware.app;
 
-import net.breezeware.food.service.CustomerFoodService;
 import net.breezeware.food.entity.FoodItem;
+import net.breezeware.food.service.AdminFoodService;
+import net.breezeware.food.service.CustomerFoodService;
+import net.breezeware.user.entity.Role;
 
 import java.util.List;
 import java.util.Scanner;
 
 public class CafeteriaApplication {
 
-    private static final CustomerFoodService service = new CustomerFoodService();
-    private static final Scanner scanner = new Scanner(System.in);
+    private static final AdminFoodService adminService = new AdminFoodService();
+    private static final CustomerFoodService customerService = new CustomerFoodService();
 
     public static void main(String[] args) {
 
-
-        System.out.println("=== Welcome to the Cafeteria Application ===");
+        Scanner sc = new Scanner(System.in);
+        Role role = getRoleFromUser(sc);
 
         while (true) {
-            System.out.println("\nSelect an option:");
-            System.out.println("1. View all menu items");
-            System.out.println("2. View a specific menu by ID");
-            System.out.println("3. Exit");
-
-            System.out.print("Enter your choice: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            showMenu(role);
+            int choice = sc.nextInt();
 
             switch (choice) {
-                case 1:
-                    viewAllMenus();
-                    break;
-                case 2:
-                    viewSpecificMenu();
-                    break;
-                case 3:
-                    System.out.println("Thank you for using Cafeteria Application!");
+
+                case 1 -> viewAllFoodItems();
+
+                case 2 -> viewFoodItemsByMenu(sc);
+
+                case 3 -> {
+                    if (role != Role.ADMIN) {
+                        System.out.println("❌ Only ADMIN can add food items");
+                        break;
+                    }
+                    addFoodItem(sc);
+                }
+
+                case 4 -> {
+                    if (role != Role.ADMIN) {
+                        System.out.println("❌ Only ADMIN can delete food items");
+                        break;
+                    }
+                    deleteFoodItem(sc);
+                }
+
+                case 5 -> {
+                    System.out.println("Exiting...");
                     return;
-                default:
-                    System.out.println("Invalid choice! Try again.");
+                }
+
+                default -> System.out.println("Invalid option");
             }
         }
     }
 
-    private static void viewAllMenus() {
-        List<FoodItem> items = service.viewMenus();
-        if (items.isEmpty()) {
-            System.out.println("No menu items available.");
-            return;
+    // ---------------- MENU ----------------
+    private static void showMenu(Role role) {
+
+        System.out.println("\n=== Cafeteria Application ===");
+        System.out.println("1. View all food items");
+        System.out.println("2. View food items by menu");
+
+        if (role == Role.ADMIN) {
+            System.out.println("3. Add food item");
+            System.out.println("4. Delete food item");
         }
 
-        System.out.println("\n--- All Menu Items ---");
-        for (FoodItem item : items) {
-            System.out.println("ID: " + item.getId() +
-                    ", Name: " + item.getName() +
-                    ", Price: $" + item.getPrice() +
-                    ", Category: " + item.getCategory()+
-                    ", Description: " + item.getDescription()+
-                    ", Quantity: " + item.getQuantity());
+        System.out.println("5. Exit");
+        System.out.print("Enter choice: ");
+    }
+
+    // ---------------- VIEW ----------------
+    private static void viewAllFoodItems() {
+        List<FoodItem> items = customerService.viewAllFoodItems();
+        items.forEach(System.out::println);
+    }
+
+    private static void viewFoodItemsByMenu(Scanner sc) {
+        System.out.print("Enter Menu ID: ");
+        int menuId = sc.nextInt();
+
+        List<FoodItem> items = customerService.viewFoodItemsByMenu(menuId);
+
+        if (items.isEmpty()) {
+            System.out.println("No items found for this menu");
+        } else {
+            items.forEach(System.out::println);
         }
     }
 
-    private static void viewSpecificMenu() {
-        System.out.print("Enter Menu ID: ");
-        int menuId = scanner.nextInt();
-        scanner.nextLine();
+    // ---------------- ADMIN ----------------
+    private static void addFoodItem(Scanner sc) {
 
-        List<FoodItem> items = service.viewMenu(menuId);
-        if (items.isEmpty()) {
-            System.out.println("No items found for Menu ID: " + menuId);
-            return;
-        }
+        sc.nextLine(); // clear buffer
 
-        System.out.println("\n--- Menu ID " + menuId + " Items ---");
-        for (FoodItem item : items) {
-            System.out.println("ID: " + item.getId() +
-                    ", Name: " + item.getName() +
-                    ", Price: $" + item.getPrice() +
-                    ", Category: " + item.getCategory() +
-                    "Description: " + item.getDescription() +
-                    ", Quantity: " + item.getQuantity());
-        }
+        FoodItem item = new FoodItem();
+
+        System.out.print("Name: ");
+        item.setName(sc.nextLine());
+
+        System.out.print("Price: ");
+        item.setPrice(sc.nextDouble());
+
+        sc.nextLine();
+        System.out.print("Category: ");
+        item.setCategory(sc.nextLine());
+
+        System.out.print("Description: ");
+        item.setDescription(sc.nextLine());
+
+        System.out.print("Quantity: ");
+        item.setQuantity(sc.nextInt());
+
+        System.out.print("Menu ID: ");
+        int menuId = sc.nextInt();
+
+        adminService.addFoodItem(item, menuId);
+    }
+
+    private static void deleteFoodItem(Scanner sc) {
+        System.out.print("Enter Food Item ID: ");
+        int id = sc.nextInt();
+        adminService.deleteFoodItem(id);
+    }
+
+    // ---------------- ROLE ----------------
+    private static Role getRoleFromUser(Scanner sc) {
+
+        System.out.println("Select Role:");
+        System.out.println("1. Admin");
+        System.out.println("2. Staff");
+        System.out.println("3. Customer");
+
+        int choice = sc.nextInt();
+
+        return switch (choice) {
+            case 1 -> Role.ADMIN;
+            case 2 -> Role.STAFF;
+            case 3 -> Role.CUSTOMER;
+            default -> throw new IllegalArgumentException("Invalid role");
+        };
     }
 }

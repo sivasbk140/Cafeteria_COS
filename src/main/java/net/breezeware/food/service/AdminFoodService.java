@@ -1,31 +1,30 @@
 package net.breezeware.food.service;
 
+import net.breezeware.food.dao.FoodItemDao;
+import net.breezeware.food.dao.FoodMenuItemMapDao;
 import net.breezeware.food.entity.FoodItem;
-import net.breezeware.food.dao.FoodMenuDao;
-
-import java.util.List;
 
 public class AdminFoodService {
 
-    private final FoodMenuDao dao = new FoodMenuDao();
+    private final FoodItemDao foodItemDao = new FoodItemDao();
+    private final FoodMenuItemMapDao mapDao = new FoodMenuItemMapDao();
 
-
-    public boolean addFoodItem(FoodItem item) {
-        return dao.insertFoodItem(item);
+    // Add food item + map to menu
+    public void addFoodItem(FoodItem item, int menuId) {
+        int foodItemId = foodItemDao.create(item);
+        mapDao.create(menuId, foodItemId);
+        System.out.println("Food item added and mapped to menu");
     }
 
-
-    public boolean updateFoodItem(FoodItem item) {
-        return dao.updateFoodItem(item);
+    // Delete food item
+    public void deleteFoodItem(int foodItemId) {
+        foodItemDao.delete(foodItemId);
+        System.out.println("Food item deleted");
     }
 
-
-    public boolean deleteFoodItem(int id) {
-        return dao.deleteFoodItem(id);
-    }
-
-
-    public List<FoodItem> viewAllFoodItems() {
-        return dao.fetchAllFoodItems();
+    // Update food item
+    public void updateFoodItem(FoodItem item) {
+        foodItemDao.update(item);
+        System.out.println("Food item updated");
     }
 }

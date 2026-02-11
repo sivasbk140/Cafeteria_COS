@@ -14,7 +14,7 @@ public class FoodItem {
           this.name = name;
           this.price = price;
           this.category = category;
-          this. price = price;
+          this. quantity = quantity;
           this.description = description;
      }
 
