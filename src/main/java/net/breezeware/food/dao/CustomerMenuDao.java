@@ -8,13 +8,16 @@ import java.util.List;
 
 public class CustomerMenuDao {
 
-    private final String DB_URL = "jdbc:sqlite:/home/sivabalakrishnan/sivasbk/Cafeteria_COS/cafeteria.db";
+    private final String DB_URL = "jdbc:sqlite:cafeteria.db";
 
 
 
     public List<FoodItem> fetchMenu(int menuId) {
         List<FoodItem> items = new ArrayList<>();
-        String sql = "SELECT * FROM Food_Item WHERE menu_id = ?";
+        String sql = "SELECT fi.* FROM Food_Item fi " +
+        "JOIN Food_Menu_Items_Map fmm ON fi.id = fmm.food_item_id " +
+                "WHERE fmm.menu_id = ?";
+
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
