@@ -81,7 +81,9 @@ public class FoodMenuDao {
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getDouble("price"),
-                        rs.getString("category")
+                        rs.getString("category"),
+                        rs.getString("description"),
+                        rs.getInt("quantity")
                 ));
             }
 

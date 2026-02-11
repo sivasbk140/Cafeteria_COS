@@ -10,7 +10,7 @@ public class FoodItemDao {
     public int create(FoodItem item) {
 
         String sql =
-                "INSERT INTO Food_Item (name, price, category, created_on) " +
+                "INSERT INTO Food_Item (name, price, category,description, quantity, created_on) " +
                         "VALUES (?, ?, ?, CURRENT_TIMESTAMP)";
 
         try (Connection con = DBConnection.getConnection();
@@ -20,6 +20,9 @@ public class FoodItemDao {
             ps.setString(1, item.getName());
             ps.setDouble(2, item.getPrice());
             ps.setString(3, item.getCategory());
+            ps.setString(4,item.getDescription());
+            ps.setInt(5, item.getQuantity());
+
 
             ps.executeUpdate();
 
