@@ -8,7 +8,7 @@ public class DBConnection {
 
 
     private static final String DB_URL =
-            "jdbc:sqlite:C:/Users/preet/Cafeteria_COS/cafeteria.db";
+            "jdbc:sqlite:C:/Users/preet/Cafeteria_COS/Backend/cafeteria.db";
 
     static {
         try {

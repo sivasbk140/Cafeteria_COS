@@ -101,15 +101,7 @@ public class SchemaInit {
                     updated_on TIMESTAMP
                 )
             """);
-            st.execute("""
-                            INSERT INTO Food_Menu (name, description, price) VALUES 
-                          ('Cheese Burger', 'Delicious burger with cheese', 120),
-('Veg Pizza', 'Pizza topped with fresh vegetables', 250),
-('Grilled Sandwich', 'Toasted sandwich with veggies and cheese', 100),
-('Pasta Alfredo', 'Creamy white sauce pasta', 180),
-('Chicken Wrap', 'Spicy grilled chicken wrap', 150);
 
-""");
 
             System.out.println("Schema initialization completed");
 

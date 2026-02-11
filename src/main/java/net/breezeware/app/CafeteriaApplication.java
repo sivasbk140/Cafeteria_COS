@@ -13,6 +13,7 @@ public class CafeteriaApplication {
 
     public static void main(String[] args) {
 
+
         System.out.println("=== Welcome to the Cafeteria Application ===");
 
         while (true) {
