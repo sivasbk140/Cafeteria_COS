@@ -12,7 +12,7 @@ public class UserService {
             throws Exception {
 
         if (userDao.existsByEmail(email)) {
-            System.out.println(" User already exists: " + email);
+            System.out.println("User already exists");
             return;
         }
 
@@ -23,6 +23,10 @@ public class UserService {
         user.setRole(role);
 
         userDao.create(user);
-        System.out.println(" User registered: " + email);
+        System.out.println("Registration successful. Please login.");
+    }
+
+    public User login(String email, String password) throws Exception {
+        return userDao.login(email, password);
     }
 }
