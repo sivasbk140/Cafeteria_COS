@@ -1,43 +1,22 @@
 package net.breezeware.food.service;
 
 import net.breezeware.food.dao.CustomerMenuDao;
-import net.breezeware.food.entity.FoodItem;
+import net.breezeware.food.dto.MenuViewDTO;
 
 import java.util.List;
 
-public class StaffFoodService {
+public class StaffFoodService extends FoodService {
 
-    private final CustomerMenuDao dao = new CustomerMenuDao();
+    private final CustomerMenuDao customerMenuDao;
 
-    // View items of a specific menu
-    public void viewMenuItems(int menuId) {
-
-        List<FoodItem> items = dao.fetchMenu(menuId);
-
-        if (items.isEmpty()) {
-            System.out.println(" No items found for Menu ID: " + menuId);
-            return;
-        }
-
-        System.out.println("\n--- Menu Items ---");
-        for (FoodItem item : items) {
-            System.out.println(item);
-        }
+    public StaffFoodService() {
+        this.customerMenuDao = new CustomerMenuDao();
     }
 
-    // View all available food items
-    public void viewAllMenuItems() {
-
-        List<FoodItem> items = dao.fetchAllMenus();
-
-        if (items.isEmpty()) {
-            System.out.println(" No menu items available");
-            return;
-        }
-
-        System.out.println("\n--- All Menu Items ---");
-        for (FoodItem item : items) {
-            System.out.println(item);
-        }
+    // ─── View Full Weekly Menu ───────────────────────────────────
+    public void viewFullWeekMenu() {
+        System.out.println("\n=== FULL WEEKLY MENU ===");
+        List<MenuViewDTO> menuItems = customerMenuDao.getFullWeekMenu();
+        displayMenu(menuItems);
     }
 }

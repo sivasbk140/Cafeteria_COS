@@ -9,6 +9,8 @@ import java.util.List;
 
 public class OrderItemdao {
 
+    private List<OrderItem> items;
+
     public void create(OrderItem item) throws SQLException {
 
         String sql = """
@@ -28,32 +30,43 @@ public class OrderItemdao {
         }
     }
 
-    public List<OrderItem> findByOrderId(int orderId)
-            throws SQLException {
 
-        String sql = """
-            SELECT * FROM Order_Items WHERE order_id = ?
-        """;
+    public static List<OrderItem> findByOrderId(int orderId) throws SQLException {
+
+        String sql = "SELECT "+
+        "fmm.menu_id AS menu_id, " +
+                "fi.name AS food_item_name, " +
+        " fi.id AS food_item_id,"+
+                "oi.quantity AS quantity,"+
+        "(oi.quantity * fi.price) AS total_price" +
+        "FROM Order_Items oi" +
+        "JOIN Food_Menu_Items_Map fmm " +
+        "ON oi.food_menu_item_id = fmm.id " +
+       " JOIN Food_Item fi " +
+       "ON fmm.food_item_id = fi.id" +
+       "JOIN Food_Menu fm" +
+       "ON fmm.menu_id = fm.id " +
+       "WHERE oi.order_id = ?;" ;
+
 
         List<OrderItem> items = new ArrayList<>();
-
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, orderId);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                OrderItem item = new OrderItem();
-                item.setId(rs.getInt("id"));
-                item.setOrderId(rs.getInt("order_id"));
-                item.setFoodMenuItemId(
-                        rs.getInt("food_menu_item_id"));
-                item.setQuantity(rs.getInt("quantity"));
-                item.setPrice(rs.getDouble("price"));
-                items.add(item);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    OrderItem item = new OrderItem();
+                    item.setId(rs.getInt("id"));
+                    item.setOrderId(rs.getInt("order_id"));
+                    item.setFoodMenuItemId(rs.getInt("food_menu_item_id"));
+                    item.setQuantity(rs.getInt("quantity"));
+                    item.setPrice(rs.getDouble("price"));
+                    items.add(item);
+                }
             }
         }
         return items;
     }
+
 }

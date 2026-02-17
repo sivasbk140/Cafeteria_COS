@@ -6,19 +6,35 @@ import java.sql.SQLException;
 
 public class DBConnection {
 
+    private static final String URL = "jdbc:sqlite:cafeteria.db";
+    private static Connection connection = null;
 
-    private static final String DB_URL = "jdbc:sqlite:cafeteria.db";
-
-    static {
-        try {
-            Class.forName("org.sqlite.JDBC");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(" SQLite JDBC Driver not found", e);
-        }
+    private DBConnection() {
+        // prevent instantiation
     }
 
-    public static Connection getConnection() throws SQLException {
-        System.out.println(" USING DATABASE FILE: " + DB_URL);
-        return DriverManager.getConnection(DB_URL);
+    public static Connection getConnection() {
+        try {
+            if (connection == null || connection.isClosed()) {
+                connection = DriverManager.getConnection(URL);
+                System.out.println("USING DATABASE FILE: " + URL);
+            }
+        } catch (SQLException e) {
+            System.out.println("ERROR: Could not connect to database.");
+            e.printStackTrace();
+        }
+        return connection;
+    }
+
+    public static void closeConnection() {
+        try {
+            if (connection != null && !connection.isClosed()) {
+                connection.close();
+                System.out.println("Database connection closed.");
+            }
+        } catch (SQLException e) {
+            System.out.println("ERROR: Could not close database connection.");
+            e.printStackTrace();
+        }
     }
 }

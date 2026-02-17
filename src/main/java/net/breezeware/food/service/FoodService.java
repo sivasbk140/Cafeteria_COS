@@ -1,42 +1,56 @@
 package net.breezeware.food.service;
 
-import net.breezeware.food.entity.FoodItem;
-import net.breezeware.food.dao.FoodMenuDao;
+import net.breezeware.food.dao.CustomerMenuDao;
+import net.breezeware.food.dto.MenuViewDTO;
+import net.breezeware.food.entity.MenuDay;
 
 import java.util.List;
+import java.util.Map;
+import java.util.LinkedHashMap;
 
 public class FoodService {
 
-    private final FoodMenuDao dao = new FoodMenuDao();
+    private final CustomerMenuDao customerMenuDao;
 
-
-    public boolean addFoodItem(FoodItem item) {
-        return dao.insertFoodItem(item);
+    public FoodService() {
+        this.customerMenuDao = new CustomerMenuDao();
     }
 
+    // ─── Display Menu (shared logic) ─────────────────────────────
+    public void displayMenu(List<MenuViewDTO> menuItems) {
+        if (menuItems.isEmpty()) {
+            System.out.println("No menu items available.");
+            return;
+        }
 
-    public boolean updateFoodItem(FoodItem item) {
-        return dao.updateFoodItem(item);
-    }
+        // Group by day and category
+        Map<MenuDay, Map<String, List<MenuViewDTO>>> grouped = new LinkedHashMap<>();
 
+        for (MenuViewDTO item : menuItems) {
+            grouped.putIfAbsent(item.getDay(), new LinkedHashMap<>());
+            grouped.get(item.getDay()).putIfAbsent(item.getMenuCategory(), new java.util.ArrayList<>());
+            grouped.get(item.getDay()).get(item.getMenuCategory()).add(item);
+        }
 
-    public boolean deleteFoodItem(int id) {
-        return dao.deleteFoodItem(id);
-    }
+        // Display
+        for (Map.Entry<MenuDay, Map<String, List<MenuViewDTO>>> dayEntry : grouped.entrySet()) {
+            System.out.println("\n=== " + dayEntry.getKey() + " ===");
 
+            for (Map.Entry<String, List<MenuViewDTO>> categoryEntry : dayEntry.getValue().entrySet()) {
+                System.out.println("-- " + categoryEntry.getKey() + " --");
 
-    public List<FoodItem> viewAllFoodItems() {
-        return dao.fetchAllFoodItems();
-    }
-
-
-    public FoodItem viewFoodItemById(int id) {
-        List<FoodItem> items = dao.fetchAllFoodItems();
-        for (FoodItem item : items) {
-            if (item.getId() == id) {
-                return item;
+                for (MenuViewDTO item : categoryEntry.getValue()) {
+                    System.out.printf("• %-20s | ₹%-7.2f | %s%n",
+                            item.getFoodItemName(),
+                            item.getPrice(),
+                            item.getDescription());
+                }
             }
         }
-        return null;
+    }
+
+    // ─── Format Price ────────────────────────────────────────────
+    protected String formatPrice(double price) {
+        return String.format("₹%.2f", price);
     }
 }

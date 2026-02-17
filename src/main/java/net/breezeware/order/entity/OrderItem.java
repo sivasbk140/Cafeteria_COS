@@ -7,6 +7,7 @@ public class OrderItem {
     private int id;
     private int orderId;
     private int foodMenuItemId;
+    private int name;
     private int quantity;
     private double price;
     private Instant createdOn;
@@ -49,5 +50,13 @@ public class OrderItem {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public int getName() {
+        return name;
+    }
+
+    public void setName(int name) {
+        this.name = name;
     }
 }

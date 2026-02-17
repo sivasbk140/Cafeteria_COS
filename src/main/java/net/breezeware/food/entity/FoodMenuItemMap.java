@@ -1,51 +1,89 @@
 package net.breezeware.food.entity;
 
-import java.time.Instant;
-
 public class FoodMenuItemMap {
+
  private int id;
- private int menu_id;
- private int item_id;
- private Instant updatedOn;
- private  Instant createdOn;
+ private int menuId;
+ private int foodItemId;
+ private boolean isAvailable;
+ private String createdOn;
+ private String updatedOn;
+
+ public FoodMenuItemMap() {
+ }
+
+ public FoodMenuItemMap(int id, int menuId, int foodItemId,
+                        boolean isAvailable,
+                        String createdOn, String updatedOn) {
+  this.id          = id;
+  this.menuId      = menuId;
+  this.foodItemId  = foodItemId;
+  this.isAvailable = isAvailable;
+  this.createdOn   = createdOn;
+  this.updatedOn   = updatedOn;
+ }
+
+ // ─── Getters ─────────────────────────────────────────────────
 
  public int getId() {
   return id;
  }
 
+ public int getMenuId() {
+  return menuId;
+ }
+
+ public int getFoodItemId() {
+  return foodItemId;
+ }
+
+ public boolean isAvailable() {
+  return isAvailable;
+ }
+
+ public String getCreatedOn() {
+  return createdOn;
+ }
+
+ public String getUpdatedOn() {
+  return updatedOn;
+ }
+
+ // ─── Setters ─────────────────────────────────────────────────
+
  public void setId(int id) {
   this.id = id;
  }
 
- public int getMenu_id() {
-  return menu_id;
+ public void setMenuId(int menuId) {
+  this.menuId = menuId;
  }
 
- public void setMenu_id(int menu_id) {
-  this.menu_id = menu_id;
+ public void setFoodItemId(int foodItemId) {
+  this.foodItemId = foodItemId;
  }
 
- public int getItem_id() {
-  return item_id;
+ public void setAvailable(boolean available) {
+  this.isAvailable = available;
  }
 
- public void setItem_id(int item_id) {
-  this.item_id = item_id;
+ public void setCreatedOn(String createdOn) {
+  this.createdOn = createdOn;
  }
 
- public Instant getUpdatedOn() {
-  return updatedOn;
- }
-
- public void setUpdatedOn(Instant updatedOn) {
+ public void setUpdatedOn(String updatedOn) {
   this.updatedOn = updatedOn;
  }
 
- public Instant getCreatedOn() {
-  return createdOn;
- }
+ // ─── toString ────────────────────────────────────────────────
 
- public void setCreatedOn(Instant createdOn) {
-  this.createdOn = createdOn;
+ @Override
+ public String toString() {
+  return "FoodMenuItemMap{" +
+          "id=" + id +
+          ", menuId=" + menuId +
+          ", foodItemId=" + foodItemId +
+          ", isAvailable=" + isAvailable +
+          '}';
  }
 }

@@ -1,8 +1,19 @@
 package net.breezeware.user.entity;
 
+import net.breezeware.food.entity.MenuDay;
+
 public enum Role {
     ADMIN,
     STAFF,
     CUSTOMER,
-    DELIVERY_STAFF
+    DELIVERY_STAFF;
+
+    public static Role fromString(String role) {
+        try {
+            return Role.valueOf(role.toUpperCase().trim());
+        } catch (IllegalArgumentException e) {
+            System.out.println("ERROR: Invalid day value in DB → '" + role + "'");
+            return null;
+        }
+    }
 }

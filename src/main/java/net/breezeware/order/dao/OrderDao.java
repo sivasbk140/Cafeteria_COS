@@ -1,12 +1,15 @@
 package net.breezeware.order.dao;
 
 import net.breezeware.order.entity.Order;
+
 import net.breezeware.order.entity.OrderStatus;
 import net.breezeware.util.DBConnection;
 
 import java.sql.*;
 
 public class OrderDao {
+
+   // private int orderId;
 
     public int create(Order order) throws SQLException {
 
@@ -44,4 +47,25 @@ public class OrderDao {
             ps.executeUpdate();
         }
     }
-}
+    public static void delete(int orderID)
+    {
+        String sql;
+        sql = """ 
+                DElETE FROM Order_Table WHERE id=? """;
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, orderID);
+
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+
+    }
+

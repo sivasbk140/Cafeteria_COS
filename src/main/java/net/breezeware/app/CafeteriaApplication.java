@@ -1,230 +1,145 @@
 package net.breezeware.app;
 
-import net.breezeware.food.entity.FoodItem;
 import net.breezeware.food.service.AdminFoodService;
 import net.breezeware.food.service.CustomerFoodService;
 import net.breezeware.food.service.StaffFoodService;
+import net.breezeware.user.dto.UserDTO;
 import net.breezeware.user.entity.Role;
-import net.breezeware.user.entity.User;
 import net.breezeware.user.service.UserService;
+import net.breezeware.util.DBConnection;
 
 import java.util.Scanner;
 
 public class CafeteriaApplication {
 
-    private static final Scanner sc = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
     private static final UserService userService = new UserService();
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+        System.out.println("=========================================");
+        System.out.println("      CAFETERIA SYSTEM");
+        System.out.println("=========================================");
 
-        System.out.println("Select Role:");
+        Role selectedRole = selectRole();
+        if (selectedRole == null) {
+            System.out.println("Invalid role selection. Exiting...");
+            return;
+        }
+
+        UserDTO loggedInUser = userService.loginOrRegister(selectedRole);
+
+        if (loggedInUser == null) {
+            System.out.println("Login/Registration failed. Exiting...");
+            return;
+        }
+
+
+        switch (loggedInUser.getRole()) {
+            case ADMIN    -> adminMenu();
+            case STAFF    -> staffMenu();
+            case CUSTOMER -> customerMenu();
+        }
+
+
+        DBConnection.closeConnection();
+        scanner.close();
+    }
+
+
+
+    private static Role selectRole() {
+        System.out.println("\nSelect Role:");
         System.out.println("1. ADMIN");
         System.out.println("2. STAFF");
         System.out.println("3. CUSTOMER");
+        System.out.print("Enter choice: ");
 
-        int roleChoice = sc.nextInt();
-        sc.nextLine();
+        int choice = Integer.parseInt(scanner.nextLine().trim());
 
-        Role role = switch (roleChoice) {
+        return switch (choice) {
             case 1 -> Role.ADMIN;
             case 2 -> Role.STAFF;
-            default -> Role.CUSTOMER;
+            case 3 -> Role.CUSTOMER;
+            default -> null;
         };
-
-        System.out.println("1. Login");
-        System.out.println("2. Register");
-        int choice = sc.nextInt();
-        sc.nextLine();
-
-        if (choice == 2) {
-            System.out.print("Name: ");
-            String name = sc.nextLine();
-
-            System.out.print("Email: ");
-            String email = sc.nextLine();
-
-            System.out.print("Password: ");
-            String password = sc.nextLine();
-
-            userService.register(name, email, password, role);
-            System.out.println("Please login to continue.\n");
-        }
-
-        System.out.print("Email: ");
-        String email = sc.nextLine();
-
-        System.out.print("Password: ");
-        String password = sc.nextLine();
-
-        User user = userService.login(email, password);
-
-        if (user == null) {
-            System.out.println("Invalid email or password");
-            return;
-        }
-
-        if (user.getRole() != role) {
-            System.out.println("Role mismatch. Access denied.");
-            return;
-        }
-
-        switch (role) {
-            case ADMIN -> adminMenu();
-            case STAFF -> staffMenu();
-            case CUSTOMER -> customerMenu();
-        }
     }
 
-    // ================= ADMIN MENU =================
+
+
     private static void adminMenu() {
-
-        AdminFoodService service = new AdminFoodService();
+        AdminFoodService adminService = new AdminFoodService();
 
         while (true) {
-            System.out.println("""
-            === ADMIN MENU ===
-            1. View All Food Items
-            2. View Food Items By Menu
-            3. Add Food Item
-            4. Update Food Item
-            5. Delete Food Item
-            6. Exit
-            """);
+            System.out.println("\n=== ADMIN MENU ===");
+            System.out.println("1. View All Food Items");
+            System.out.println("2. View Food Items By Menu");
+            System.out.println("3. Add Food Item");
+            System.out.println("4. Update Food Item");
+            System.out.println("5. Delete Food Item");
+            System.out.println("6. Manage Menus");
+            System.out.println("7. Exit");
+            System.out.print("Enter choice: ");
 
-            int c = sc.nextInt();
+            int choice = Integer.parseInt(scanner.nextLine().trim());
 
-            if (c == 6) return;
-
-            if (c == 1) {
-                service.viewAllFoodItems();
-            }
-
-            if (c == 2) {
-                System.out.print("Menu ID: ");
-                int menuId = sc.nextInt();
-                service.viewFoodItemsByMenu(menuId);
-            }
-
-            if (c == 3) {
-                sc.nextLine();
-
-                System.out.print("Name: ");
-                String name = sc.nextLine();
-
-                System.out.print("Price: ");
-                double price = sc.nextDouble();
-                sc.nextLine();
-
-                System.out.print("Category: ");
-                String category = sc.nextLine();
-
-                System.out.print("Description: ");
-                String description = sc.nextLine();
-
-                System.out.print("Quantity: ");
-                int quantity = sc.nextInt();
-
-                System.out.print("Menu ID: ");
-                int menuId = sc.nextInt();
-
-                service.addFoodItem(
-                        new FoodItem(0, name, price, category, description, quantity),
-                        menuId
-                );
-            }
-
-            if (c == 4) {
-                sc.nextLine();
-
-                System.out.print("Food ID: ");
-                int id = sc.nextInt();
-                sc.nextLine();
-
-                System.out.print("New Name: ");
-                String name = sc.nextLine();
-
-                System.out.print("New Price: ");
-                double price = sc.nextDouble();
-                sc.nextLine();
-
-                System.out.print("New Category: ");
-                String category = sc.nextLine();
-
-                System.out.print("New Description: ");
-                String description = sc.nextLine();
-
-                System.out.print("New Quantity: ");
-                int quantity = sc.nextInt();
-
-                service.updateFoodItem(
-                        new FoodItem(id, name, price, category, description, quantity)
-                );
-            }
-
-            if (c == 5) {
-                System.out.print("Food ID: ");
-                service.deleteFoodItem(sc.nextInt());
+            switch (choice) {
+                case 1 -> adminService.viewAllFoodItems();
+                case 2 -> adminService.viewMenuByDay();
+                case 3 -> adminService.addFoodItem();
+                case 4 -> adminService.updateFoodItem();
+                case 5 -> adminService.deleteFoodItem();
+                case 6 -> adminService.manageMenus();
+                case 7 -> {
+                    System.out.println("\nLogging out...");
+                    return;
+                }
+                default -> System.out.println("Invalid choice.");
             }
         }
     }
 
 
-    // ================= STAFF MENU =================
     private static void staffMenu() {
-
-        StaffFoodService service = new StaffFoodService();
+        StaffFoodService staffService = new StaffFoodService();
 
         while (true) {
-            System.out.println("""
-                === STAFF MENU ===
-                1. View All
-                2. View By Menu
-                3. Exit
-                """);
+            System.out.println("\n=== STAFF MENU ===");
+            System.out.println("1. View Full Weekly Menu");
+            System.out.println("2. Exit");
+            System.out.print("Enter choice: ");
 
-            int c = sc.nextInt();
+            int choice = Integer.parseInt(scanner.nextLine().trim());
 
-            if (c == 3) return;
-
-            if (c == 1) {
-                service.viewAllMenuItems();
-            }
-
-            if (c == 2) {
-                System.out.print("Menu ID: ");
-                int menuId = sc.nextInt();
-                service.viewMenuItems(menuId);
+            switch (choice) {
+                case 1 -> staffService.viewFullWeekMenu();
+                case 2 -> {
+                    System.out.println("\nLogging out...");
+                    return;
+                }
+                default -> System.out.println("Invalid choice.");
             }
         }
     }
 
-    // ================= CUSTOMER MENU =================
-    private static void customerMenu() {
 
-        CustomerFoodService service = new CustomerFoodService();
+    private static void customerMenu() {
+        CustomerFoodService customerService = new CustomerFoodService();
 
         while (true) {
-            System.out.println("""
-                === CUSTOMER MENU ===
-                1. View All
-                2. View By Menu
-                3. Exit
-                """);
+            System.out.println("\n=== CUSTOMER MENU ===");
+            System.out.println("1. View Menu");
+            System.out.println("2. Exit");
+            System.out.print("Enter choice: ");
 
-            int c = sc.nextInt();
+            int choice = Integer.parseInt(scanner.nextLine().trim());
 
-            if (c == 3) return;
-
-            if (c == 1) {
-                service.viewAllFoodItems()
-                        .forEach(System.out::println);
-            }
-
-            if (c == 2) {
-                System.out.print("Menu ID: ");
-                int menuId = sc.nextInt();
-                service.viewFoodItemsByMenu(menuId)
-                        .forEach(System.out::println);
+            switch (choice) {
+                case 1 -> customerService.viewMenuOptions();
+                case 2 -> {
+                    System.out.println("\nLogging out...");
+                    return;
+                }
+                default -> System.out.println("Invalid choice.");
             }
         }
     }

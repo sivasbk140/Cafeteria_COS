@@ -1,53 +1,77 @@
 package net.breezeware.food.entity;
 
-import java.time.Instant;
-
 public class AvailabilityMap {
+
  private int id;
- private int menu_Id;
- private  MenuDay menuday;
+ private int menuId;
+ private MenuDay menuDay;
+ private String createdOn;
+ private String updatedOn;
 
- private Instant updatedOn;
- private Instant createdOn;
+ public AvailabilityMap() {
+ }
 
+ public AvailabilityMap(int id, int menuId, MenuDay menuDay,
+                        String createdOn, String updatedOn) {
+  this.id        = id;
+  this.menuId    = menuId;
+  this.menuDay   = menuDay;
+  this.createdOn = createdOn;
+  this.updatedOn = updatedOn;
+ }
+
+ // ─── Getters ─────────────────────────────────────────────────
 
  public int getId() {
   return id;
  }
 
+ public int getMenuId() {
+  return menuId;
+ }
+
+ public MenuDay getMenuDay() {
+  return menuDay;
+ }
+
+ public String getCreatedOn() {
+  return createdOn;
+ }
+
+ public String getUpdatedOn() {
+  return updatedOn;
+ }
+
+ // ─── Setters ─────────────────────────────────────────────────
+
  public void setId(int id) {
   this.id = id;
  }
 
- public int getMenu_Id() {
-  return menu_Id;
+ public void setMenuId(int menuId) {
+  this.menuId = menuId;
  }
 
- public void setMenu_Id(int menu_Id) {
-  this.menu_Id = menu_Id;
+ public void setMenuDay(MenuDay menuDay) {
+  this.menuDay = menuDay;
  }
 
- public MenuDay getMenuday() {
-  return menuday;
+ public void setCreatedOn(String createdOn) {
+  this.createdOn = createdOn;
  }
 
- public void setMenuday(MenuDay menuday) {
-  this.menuday = menuday;
- }
-
- public Instant getUpdatedOn() {
-  return updatedOn;
- }
-
- public void setUpdatedOn(Instant updatedOn) {
+ public void setUpdatedOn(String updatedOn) {
   this.updatedOn = updatedOn;
  }
 
- public Instant getCreatedOn() {
-  return createdOn;
- }
+ // ─── toString ────────────────────────────────────────────────
 
- public void setCreatedOn(Instant createdOn) {
-  this.createdOn = createdOn;
+ @Override
+ public String toString() {
+  return "AvailabilityMap{" +
+          "id=" + id +
+          ", menuId=" + menuId +
+          ", menuDay=" + menuDay +
+          '}';
  }
 }

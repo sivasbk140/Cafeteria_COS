@@ -3,28 +3,64 @@ package net.breezeware.food.entity;
 public class FoodMenu {
 
     private int id;
-    private String name;
+    private String category;
+    private String createdOn;
+    private String updatedOn;
 
     public FoodMenu() {
     }
 
-    public FoodMenu(String name) {
-        this.name = name;
+    public FoodMenu(int id, String category,
+                    String createdOn, String updatedOn) {
+        this.id        = id;
+        this.category  = category;
+        this.createdOn = createdOn;
+        this.updatedOn = updatedOn;
     }
+
+    // ─── Getters ─────────────────────────────────────────────────
 
     public int getId() {
         return id;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public String getCreatedOn() {
+        return createdOn;
+    }
+
+    public String getUpdatedOn() {
+        return updatedOn;
+    }
+
+    // ─── Setters ─────────────────────────────────────────────────
+
     public void setId(int id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCreatedOn(String createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public void setUpdatedOn(String updatedOn) {
+        this.updatedOn = updatedOn;
+    }
+
+    // ─── toString ────────────────────────────────────────────────
+
+    @Override
+    public String toString() {
+        return "FoodMenu{" +
+                "id=" + id +
+                ", category='" + category + '\'' +
+                '}';
     }
 }

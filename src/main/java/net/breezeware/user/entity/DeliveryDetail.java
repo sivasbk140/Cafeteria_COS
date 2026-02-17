@@ -1,26 +1,79 @@
 package net.breezeware.user.entity;
 
-import java.time.Instant;
-
 public class DeliveryDetail {
 
     private int id;
-    private String email;
-    private String phoneNumber;
-    private String location;
     private int userId;
+    private String email;
+    private String address;
+    private String phone;
+    private String createdOn;
+    private String updatedOn;
 
-    private Instant createdOn;
-    private Instant updatedOn;
+    public DeliveryDetail() {
+    }
 
+    public DeliveryDetail(int id, int userId, String address,
+                          String phone,
+                          String createdOn, String updatedOn) {
+        this.id        = id;
+        this.userId    = userId;
+        this.address   = address;
+        this.phone     = phone;
+        this.createdOn = createdOn;
+        this.updatedOn = updatedOn;
+    }
 
+    // ─── Getters ─────────────────────────────────────────────────
 
     public int getId() {
         return id;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getCreatedOn() {
+        return createdOn;
+    }
+
+    public String getUpdatedOn() {
+        return updatedOn;
+    }
+
+    // ─── Setters ─────────────────────────────────────────────────
+
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setCreatedOn(String createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public void setUpdatedOn(String updatedOn) {
+        this.updatedOn = updatedOn;
     }
 
     public String getEmail() {
@@ -30,44 +83,17 @@ public class DeliveryDetail {
     public void setEmail(String email) {
         this.email = email;
     }
+// ─── toString ────────────────────────────────────────────────
 
-    public String getLocation() {
-        return location;
+    @Override
+    public String toString() {
+        return "DeliveryDetail{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
     }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public Instant getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Instant createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public Instant getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public void setUpdatedOn(Instant updatedOn) {
-        this.updatedOn = updatedOn;
-    }
 }

@@ -8,13 +8,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerMenuDao {
+public class AdminMenuDao {
 
     // ─── Get Menu View for All Days ──────────────────────────────
     public List<MenuViewDTO> getFullWeekMenu() {
         List<MenuViewDTO> menuViews = new ArrayList<>();
 
-        String sql = "SELECT a.menu_day, m.category, f.name, f.price, f.description " +
+        String sql = "SELECT a.menu_day, m.category, f.name, f.price, f.description , f.quantity " +
                 "FROM Availability_Map a " +
                 "JOIN Food_Menu m ON a.menu_id = m.id " +
                 "JOIN Food_Menu_Items_Map fmim ON m.id = fmim.menu_id " +
@@ -48,7 +48,8 @@ public class CustomerMenuDao {
                             rs.getString("category"),
                             rs.getString("name"),
                             rs.getDouble("price"),
-                            rs.getString("description")
+                            rs.getString("description"),
+                            rs.getInt("quantity")
                     );
                     menuViews.add(dto);
                 }
@@ -66,7 +67,7 @@ public class CustomerMenuDao {
     public List<MenuViewDTO> getMenuByDay(MenuDay day) {
         List<MenuViewDTO> menuViews = new ArrayList<>();
 
-        String sql = "SELECT a.menu_day, m.category, f.name, f.price, f.description " +
+        String sql = "SELECT a.menu_day, m.category, f.name, f.price, f.description,f.quantity " +
                 "FROM Availability_Map a " +
                 "JOIN Food_Menu m ON a.menu_id = m.id " +
                 "JOIN Food_Menu_Items_Map fmim ON m.id = fmim.menu_id " +
@@ -91,7 +92,8 @@ public class CustomerMenuDao {
                         rs.getString("category"),
                         rs.getString("name"),
                         rs.getDouble("price"),
-                        rs.getString("description")
+                        rs.getString("description"),
+                        rs.getInt("quantity")
                 );
                 menuViews.add(dto);
             }
