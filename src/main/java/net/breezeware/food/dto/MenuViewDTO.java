@@ -5,7 +5,7 @@ import net.breezeware.food.entity.MenuDay;
 public class MenuViewDTO {
 
     private MenuDay day;
-    private String menuCategory;  // BREAKFAST, LUNCH, DINNER
+    private String menuCategory;
     private String foodItemName;
     private double price;
     private String description;
@@ -33,7 +33,7 @@ public class MenuViewDTO {
         this.description   = description;
     }
 
-    // ─── Getters ─────────────────────────────────────────────────
+
 
     public MenuDay getDay() {
         return day;
@@ -57,7 +57,7 @@ public class MenuViewDTO {
 
     public int getQuantity(){ return quantity;}
 
-    // ─── Setters ─────────────────────────────────────────────────
+
 
     public void setDay(MenuDay day) {
         this.day = day;
@@ -81,7 +81,7 @@ public class MenuViewDTO {
 
     public void setQuantity(int quantity){this.quantity=quantity;}
 
-    // ─── toString ────────────────────────────────────────────────
+
 
     @Override
     public String toString() {

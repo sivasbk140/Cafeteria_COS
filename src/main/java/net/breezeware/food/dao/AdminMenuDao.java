@@ -10,7 +10,7 @@ import java.util.List;
 
 public class AdminMenuDao {
 
-    // ─── Get Menu View for All Days ──────────────────────────────
+
     public List<MenuViewDTO> getFullWeekMenu() {
         List<MenuViewDTO> menuViews = new ArrayList<>();
 
@@ -63,7 +63,6 @@ public class AdminMenuDao {
         return menuViews;
     }
 
-    // ─── Get Menu View for Specific Day ──────────────────────────
     public List<MenuViewDTO> getMenuByDay(MenuDay day) {
         List<MenuViewDTO> menuViews = new ArrayList<>();
 

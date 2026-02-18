@@ -47,4 +47,15 @@ public class Orderdto {
     public void setItem_id(int item_id) {
         this.item_id = item_id;
     }
+    @Override
+    public String toString() {
+        return "Orderdto{" +
+                "order_id=" + order_id +
+
+                ", price=" + price +
+                ", quantity=" + quantity +
+                ", menu_id='" + menu_id + '\'' +
+                ", item_id='" + item_id + '\'' +
+                '}';
+    }
 }

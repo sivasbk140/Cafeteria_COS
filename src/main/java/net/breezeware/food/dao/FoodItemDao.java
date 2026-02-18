@@ -155,7 +155,7 @@ public class FoodItemDao {
         return false;
     }
 
-    // ─── Get Food Items By Category ──────────────────────────────
+
     public List<FoodItemDTO> getFoodItemsByCategory(String category) {
         List<FoodItemDTO> items = new ArrayList<>();
         String sql = "SELECT id, name, price, quantity, category, description FROM Food_Item WHERE category = ?";

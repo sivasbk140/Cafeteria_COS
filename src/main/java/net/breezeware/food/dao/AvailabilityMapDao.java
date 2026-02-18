@@ -10,7 +10,7 @@ import java.util.List;
 
 public class AvailabilityMapDao {
 
-    // ─── Assign Menu to Day ──────────────────────────────────────
+
     public boolean assignMenuToDay(int menuId, MenuDay day) {
         String sql = "INSERT INTO Availability_Map (menu_id, menu_day, created_on, updated_on) " +
                 "VALUES (?, ?, datetime('now'), datetime('now'))";
@@ -32,7 +32,7 @@ public class AvailabilityMapDao {
         return false;
     }
 
-    // ─── Remove Menu from Day ────────────────────────────────────
+
     public boolean removeMenuFromDay(int menuId, MenuDay day) {
         String sql = "DELETE FROM Availability_Map WHERE menu_id = ? AND menu_day = ?";
 
@@ -53,7 +53,7 @@ public class AvailabilityMapDao {
         return false;
     }
 
-    // ─── Get All Menu IDs for a Day ──────────────────────────────
+
     public List<Integer> getMenuIdsByDay(MenuDay day) {
         List<Integer> menuIds = new ArrayList<>();
         String sql = "SELECT menu_id FROM Availability_Map WHERE menu_day = ?";
@@ -76,7 +76,7 @@ public class AvailabilityMapDao {
         return menuIds;
     }
 
-    // ─── Get All Availability Mappings ───────────────────────────
+
     public List<AvailabilityMap> getAllAvailabilityMappings() {
         List<AvailabilityMap> mappings = new ArrayList<>();
         String sql = "SELECT id, menu_id, menu_day, created_on, updated_on FROM Availability_Map";
@@ -107,7 +107,7 @@ public class AvailabilityMapDao {
         return mappings;
     }
 
-    // ─── Get Availability Mappings by Day ────────────────────────
+
     public List<AvailabilityMap> getAvailabilityByDay(MenuDay day) {
         List<AvailabilityMap> mappings = new ArrayList<>();
         String sql = "SELECT id, menu_id, menu_day, created_on, updated_on FROM Availability_Map WHERE menu_day = ?";

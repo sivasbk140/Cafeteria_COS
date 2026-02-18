@@ -91,7 +91,7 @@ public class DeliveryDetailDao {
         return false;
     }
 
-    // ─── Delete Delivery Detail ──────────────────────────────────
+
     public boolean deleteDeliveryDetail(int id) {
         String sql = "DELETE FROM Delivery_Details WHERE id = ?";
 

@@ -32,4 +32,13 @@ public class OrderDeliveryMap {
    public void setDeliveryId(int deliveryId) {
       this.deliveryId = deliveryId;
    }
+
+   @Override
+   public String toString() {
+      return "FoodMenu{" +
+              "id=" + id +
+              ", orderId" + orderId +
+              ", deliveryId='" + deliveryId + '\'' +
+              '}';
+   }
 }

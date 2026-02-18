@@ -6,7 +6,7 @@ public class OrderItem {
 
     private int id;
     private int orderId;
-    private int foodMenuItemId;
+    private int foodItemId;
     private int name;
     private int quantity;
     private double price;
@@ -29,11 +29,11 @@ public class OrderItem {
     }
 
     public int getFoodMenuItemId() {
-        return foodMenuItemId;
+        return foodItemId;
     }
 
     public void setFoodMenuItemId(int foodMenuItemId) {
-        this.foodMenuItemId = foodMenuItemId;
+        this.foodItemId = foodItemId;
     }
 
     public int getQuantity() {
@@ -58,5 +58,17 @@ public class OrderItem {
 
     public void setName(int name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "FoodMenu{" +
+                "id=" + id +
+                "orderId" +orderId +
+                ", name" + name +
+                ", quantity" + quantity +
+                ", price" + price +
+                ", foodItemId='" + foodItemId + '\'' +
+                '}';
     }
 }

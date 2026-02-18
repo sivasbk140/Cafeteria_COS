@@ -9,7 +9,7 @@ import java.sql.*;
 
 public class OrderDao {
 
-   // private int orderId;
+
 
     public int create(Order order) throws SQLException {
 
@@ -64,6 +64,10 @@ public class OrderDao {
         }
     }
 
+    public static  void status()
+    {
+
+    }
 
 
 

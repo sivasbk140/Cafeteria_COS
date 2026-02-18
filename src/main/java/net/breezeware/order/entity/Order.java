@@ -40,4 +40,12 @@ public class Order {
     public void setCreatedOn(Instant createdOn) {
         this.createdOn = createdOn;
     }
+    @Override
+    public String toString() {
+        return "FoodMenu{" +
+                "id=" + id +
+                ", status"+ status +
+                ", userId='" + userId + '\'' +
+                '}';
+    }
 }
