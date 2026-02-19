@@ -1,51 +1,79 @@
 package net.breezeware.order.entity;
 
-import java.time.Instant;
-
 public class Order {
 
     private int id;
     private int userId;
     private OrderStatus status;
-    private Instant createdOn;
+    private String createdOn;
+    private String updatedOn;
+
+    public Order() {
+    }
+
+    public Order(int id, int userId, OrderStatus status,
+                 String createdOn, String updatedOn) {
+        this.id        = id;
+        this.userId    = userId;
+        this.status    = status;
+        this.createdOn = createdOn;
+        this.updatedOn = updatedOn;
+    }
+
+    // ─── Getters ─────────────────────────────────────────────────
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public int getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
     public OrderStatus getStatus() {
         return status;
+    }
+
+    public String getCreatedOn() {
+        return createdOn;
+    }
+
+    public String getUpdatedOn() {
+        return updatedOn;
+    }
+
+    // ─── Setters ─────────────────────────────────────────────────
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
-    public Instant getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(Instant createdOn) {
+    public void setCreatedOn(String createdOn) {
         this.createdOn = createdOn;
     }
+
+    public void setUpdatedOn(String updatedOn) {
+        this.updatedOn = updatedOn;
+    }
+
+    // ─── toString ────────────────────────────────────────────────
+
     @Override
     public String toString() {
-        return "FoodMenu{" +
+        return "Order{" +
                 "id=" + id +
-                ", status"+ status +
-                ", userId='" + userId + '\'' +
+                ", userId=" + userId +
+                ", status=" + status +
+                ", createdOn='" + createdOn + '\'' +
+                ", updatedOn='" + updatedOn + '\'' +
                 '}';
     }
 }

@@ -185,4 +185,97 @@ public class FoodItemDao {
 
         return items;
     }
+    // ─── Reduce Stock (called when order placed) ──────────────────
+    public boolean reduceStock(int foodItemId, int quantity) {
+        String sql = "UPDATE Food_Item SET quantity = quantity - ?, updated_on = datetime('now') WHERE id = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, quantity);
+            pstmt.setInt(2, foodItemId);
+
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            System.out.println("ERROR: Failed to reduce stock.");
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    // ─── Restore Stock (called when order cancelled) ──────────────
+    public boolean restoreStock(int foodItemId, int quantity) {
+        String sql = "UPDATE Food_Item SET quantity = quantity + ?, updated_on = datetime('now') WHERE id = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, quantity);
+            pstmt.setInt(2, foodItemId);
+
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            System.out.println("ERROR: Failed to restore stock.");
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    // ─── Check Stock Availability ─────────────────────────────────
+    public boolean hasEnoughStock(int foodItemId, int requestedQuantity) {
+        String sql = "SELECT quantity FROM Food_Item WHERE id = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, foodItemId);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                int availableStock = rs.getInt("quantity");
+                return availableStock >= requestedQuantity;
+            }
+
+        } catch (SQLException e) {
+            System.out.println("ERROR: Failed to check stock availability.");
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    // ─── Get Food Item By Name (case-insensitive) ─────────────────
+    public FoodItemDTO getFoodItemByName(String name) {
+        String sql = "SELECT id, name, price, quantity, category, description FROM Food_Item WHERE LOWER(name) = LOWER(?)";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, name);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return new FoodItemDTO(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getDouble("price"),
+                        rs.getInt("quantity"),
+                        rs.getString("category"),
+                        rs.getString("description")
+                );
+            }
+
+        } catch (SQLException e) {
+            System.out.println("ERROR: Failed to fetch food item by name.");
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

@@ -17,7 +17,7 @@ public class CafeteriaApplication {
 
     public static void main(String[] args) {
         System.out.println("=========================================");
-        System.out.println("      CAFETERIA SYSTEM");
+        System.out.println("     BREEZEWARE CAFETERIA SYSTEM");
         System.out.println("=========================================");
 
         Role selectedRole = selectRole();
@@ -33,20 +33,19 @@ public class CafeteriaApplication {
             return;
         }
 
-
+        // Route to appropriate menu based on role
         switch (loggedInUser.getRole()) {
             case ADMIN    -> adminMenu();
-            case STAFF    -> staffMenu();
-            case CUSTOMER -> customerMenu();
+            case STAFF    -> staffMenu(loggedInUser);
+            case CUSTOMER -> customerMenu(loggedInUser);
         }
 
-
+        // Close DB connection on exit
         DBConnection.closeConnection();
         scanner.close();
     }
 
-
-
+    // ─── Role Selection ──────────────────────────────────────────
     private static Role selectRole() {
         System.out.println("\nSelect Role:");
         System.out.println("1. ADMIN");
@@ -54,7 +53,12 @@ public class CafeteriaApplication {
         System.out.println("3. CUSTOMER");
         System.out.print("Enter choice: ");
 
-        int choice = Integer.parseInt(scanner.nextLine().trim());
+        int choice;
+        try {
+            choice = Integer.parseInt(scanner.nextLine().trim());
+        } catch (NumberFormatException e) {
+            return null;
+        }
 
         return switch (choice) {
             case 1 -> Role.ADMIN;
@@ -64,8 +68,7 @@ public class CafeteriaApplication {
         };
     }
 
-
-
+    // ─── Admin Menu ──────────────────────────────────────────────
     private static void adminMenu() {
         AdminFoodService adminService = new AdminFoodService();
 
@@ -80,7 +83,13 @@ public class CafeteriaApplication {
             System.out.println("7. Exit");
             System.out.print("Enter choice: ");
 
-            int choice = Integer.parseInt(scanner.nextLine().trim());
+            int choice;
+            try {
+                choice = Integer.parseInt(scanner.nextLine().trim());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid choice.");
+                continue;
+            }
 
             switch (choice) {
                 case 1 -> adminService.viewAllFoodItems();
@@ -98,49 +107,17 @@ public class CafeteriaApplication {
         }
     }
 
-
-    private static void staffMenu() {
+    // ─── Staff Menu ──────────────────────────────────────────────
+    private static void staffMenu(UserDTO user) {
         StaffFoodService staffService = new StaffFoodService();
-
-        while (true) {
-            System.out.println("\n=== STAFF MENU ===");
-            System.out.println("1. View Full Weekly Menu");
-            System.out.println("2. Exit");
-            System.out.print("Enter choice: ");
-
-            int choice = Integer.parseInt(scanner.nextLine().trim());
-
-            switch (choice) {
-                case 1 -> staffService.viewFullWeekMenu();
-                case 2 -> {
-                    System.out.println("\nLogging out...");
-                    return;
-                }
-                default -> System.out.println("Invalid choice.");
-            }
-        }
+        staffService.showStaffMenu();
+        System.out.println("\nLogging out...");
     }
 
-
-    private static void customerMenu() {
-        CustomerFoodService customerService = new CustomerFoodService();
-
-        while (true) {
-            System.out.println("\n=== CUSTOMER MENU ===");
-            System.out.println("1. View Menu");
-            System.out.println("2. Exit");
-            System.out.print("Enter choice: ");
-
-            int choice = Integer.parseInt(scanner.nextLine().trim());
-
-            switch (choice) {
-                case 1 -> customerService.viewMenuOptions();
-                case 2 -> {
-                    System.out.println("\nLogging out...");
-                    return;
-                }
-                default -> System.out.println("Invalid choice.");
-            }
-        }
+    // ─── Customer Menu ───────────────────────────────────────────
+    private static void customerMenu(UserDTO user) {
+        CustomerFoodService customerService = new CustomerFoodService(user.getId());
+        customerService.showCustomerMenu();
+        System.out.println("\nLogging out...");
     }
 }
