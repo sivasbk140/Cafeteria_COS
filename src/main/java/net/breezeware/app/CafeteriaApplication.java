@@ -111,7 +111,7 @@ public class CafeteriaApplication {
     private static void staffMenu(UserDTO user) {
         StaffFoodService staffService = new StaffFoodService();
         staffService.showStaffMenu();
-        System.out.println("\nLogging out...");
+        System.out.println("\nLogging out..."); 
     }
 
     // ─── Customer Menu ───────────────────────────────────────────
