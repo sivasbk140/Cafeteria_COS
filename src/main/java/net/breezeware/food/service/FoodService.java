@@ -16,7 +16,7 @@ public class FoodService {
         this.customerMenuDao = new CustomerMenuDao();
     }
 
-    // ─── Display Menu (shared logic) ─────────────────────────────
+    // Display Menu (shared logic)
     public void displayMenu(List<MenuViewDTO> menuItems) {
         if (menuItems.isEmpty()) {
             System.out.println("No menu items available.");
@@ -49,7 +49,7 @@ public class FoodService {
         }
     }
 
-    // ─── Format Price ────────────────────────────────────────────
+    //  Format Price
     protected String formatPrice(double price) {
         return String.format("₹%.2f", price);
     }

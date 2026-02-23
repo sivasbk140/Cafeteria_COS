@@ -16,7 +16,7 @@ public class UserService {
         this.scanner = new Scanner(System.in);
     }
 
-    // ─── Register ────────────────────────────────────────────────
+    //  Register
     public void register(Role role) {
         System.out.println("\n=== REGISTER ===");
 
@@ -28,7 +28,7 @@ public class UserService {
 
         // Check if email already exists
         if (userDao.emailExists(email)) {
-            System.out.println("\n✘ Email already registered. Please use a different email.");
+            System.out.println("\n Email already registered. Please use a different email.");
             return;
         }
 
@@ -38,13 +38,13 @@ public class UserService {
         int userId = userDao.registerUser(name, email, password, role);
 
         if (userId > 0) {
-            System.out.println("\n✔ Registered successfully! You can now login.");
+            System.out.println("\n Registered successfully! You can now login.");
         } else {
-            System.out.println("\n✘ Registration failed. Please try again.");
+            System.out.println("\n Registration failed. Please try again.");
         }
     }
 
-    // ─── Login ───────────────────────────────────────────────────
+    //  Login
     public UserDTO login(Role expectedRole) {
         System.out.print("\nEmail: ");
         String email = scanner.nextLine().trim();
@@ -55,15 +55,15 @@ public class UserService {
         UserDTO user = userDao.login(email, password, expectedRole);
 
         if (user != null) {
-            System.out.println("\n✔ Login successful! Welcome, " + user.getName() + " (" + user.getRole() + ")");
+            System.out.println("\n Login successful! Welcome, " + user.getName() + " (" + user.getRole() + ")");
             return user;
         } else {
-            System.out.println("\n✘ Invalid email or password, or you don't have " + expectedRole + " privileges.");
+            System.out.println("\n Invalid email or password, or you don't have " + expectedRole + " privileges.");
             return null;
         }
     }
 
-    // ─── Login or Register Menu ──────────────────────────────────
+    //  Login or Register Menu
     public UserDTO loginOrRegister(Role role) {
         while (true) {
             System.out.println("\n1. Login");

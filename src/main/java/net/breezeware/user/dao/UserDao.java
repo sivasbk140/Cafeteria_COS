@@ -9,7 +9,7 @@ import java.sql.*;
 
 public class UserDao {
 
-    // ─── Register New User ───────────────────────────────────────
+    // Register New User
     public int registerUser(String name, String email, String password, Role role) {
         String sql = "INSERT INTO Users (name, email, password, role, created_on, updated_on) " +
                 "VALUES (?, ?, ?, ?, datetime('now'), datetime('now'))";
@@ -39,7 +39,7 @@ public class UserDao {
         return -1;
     }
 
-    // ─── Login (authenticate user) ───────────────────────────────
+    //  Login (authenticate user)
     public UserDTO login(String email, String password, Role expectedRole) {
         String sql = "SELECT id, name, email, role FROM Users WHERE email = ? AND password = ? AND role = ?";
 
@@ -69,7 +69,7 @@ public class UserDao {
         return null;
     }
 
-    // ─── Get User By Email ───────────────────────────────────────
+    //  Get User By Email
     public User getUserByEmail(String email) {
         String sql = "SELECT id, name, email, password, role, created_on, updated_on FROM Users WHERE email = ?";
 
@@ -99,7 +99,7 @@ public class UserDao {
         return null;
     }
 
-    // ─── Get User By ID ──────────────────────────────────────────
+    //  Get User By ID
     public User getUserById(int id) {
         String sql = "SELECT id, name, email, password, role, created_on, updated_on FROM Users WHERE id = ?";
 
@@ -129,7 +129,7 @@ public class UserDao {
         return null;
     }
 
-    // ─── Update User ─────────────────────────────────────────────
+    // Update User
     public boolean updateUser(int id, String name, String email, String password) {
         String sql = "UPDATE Users SET name = ?, email = ?, password = ?, updated_on = datetime('now') WHERE id = ?";
 
@@ -152,7 +152,7 @@ public class UserDao {
         return false;
     }
 
-    // ─── Delete User ─────────────────────────────────────────────
+    //  Delete User
     public boolean deleteUser(int id) {
         String sql = "DELETE FROM Users WHERE id = ?";
 
@@ -172,7 +172,7 @@ public class UserDao {
         return false;
     }
 
-    // ─── Check if Email Exists ───────────────────────────────────
+    //  Check if Email Exists
     public boolean emailExists(String email) {
         String sql = "SELECT COUNT(*) FROM Users WHERE email = ?";
 

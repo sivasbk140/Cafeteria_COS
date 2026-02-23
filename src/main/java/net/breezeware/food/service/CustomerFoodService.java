@@ -95,13 +95,13 @@ public class CustomerFoodService extends FoodService {
         }
     }
 
-    // ─── View Full Menu ──────────────────────────────────────────
+    // View Full Menu
     private void viewFullMenu() {
         List<MenuViewDTO> menuItems = customerMenuDao.getFullWeekMenu();
         displayMenu(menuItems);
     }
 
-    // ─── View Specific Day ───────────────────────────────────────
+    // View Specific Day
     private void viewSpecificDay() {
         System.out.print("\nEnter day (MONDAY/TUESDAY/.../SUNDAY): ");
         String dayInput = scanner.nextLine().trim();

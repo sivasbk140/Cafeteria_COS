@@ -85,14 +85,14 @@ public class OrderItem {
         this.updatedOn = updatedOn;
     }
 
-    // ─── Helper Methods ──────────────────────────────────────────
+
 
     // Calculate total price for this item
     public double getTotalPrice() {
         return price * quantity;
     }
 
-    // ─── toString ────────────────────────────────────────────────
+
 
     @Override
     public String toString() {

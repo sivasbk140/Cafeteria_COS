@@ -9,7 +9,7 @@ import java.util.List;
 
 public class OrderItemDao {
 
-    // ─── Add Order Item ──────────────────────────────────────────
+    //  Add Order Item
     public int addOrderItem(int orderId, int foodItemId, double price, int quantity) {
         String sql = "INSERT INTO Order_Items (order_id, food_item_id, price, quantity, created_on, updated_on) " +
                 "VALUES (?, ?, ?, ?, datetime('now'), datetime('now'))";
@@ -39,7 +39,7 @@ public class OrderItemDao {
         return -1;
     }
 
-    // ─── Get Order Items By Order ID ─────────────────────────────
+    // Get Order Items By Order ID
     public List<OrderItem> getItemsByOrderId(int orderId) {
         List<OrderItem> items = new ArrayList<>();
         String sql = "SELECT id, order_id, food_item_id, price, quantity, created_on, updated_on " +
@@ -72,7 +72,7 @@ public class OrderItemDao {
         return items;
     }
 
-    // ─── Get Order Items With Food Names (for display) ───────────
+    //  Get Order Items With Food Names (for display)
     public List<OrderItemWithName> getItemsWithNamesByOrderId(int orderId) {
         List<OrderItemWithName> items = new ArrayList<>();
 
@@ -108,7 +108,7 @@ public class OrderItemDao {
         return items;
     }
 
-    // ─── Update Order Item Quantity ──────────────────────────────
+    // Update Order Item Quantity
     public boolean updateItemQuantity(int itemId, int newQuantity) {
         String sql = "UPDATE Order_Items SET quantity = ?, updated_on = datetime('now') WHERE id = ?";
 
@@ -129,7 +129,7 @@ public class OrderItemDao {
         return false;
     }
 
-    // ─── Delete Order Item ───────────────────────────────────────
+    //  Delete Order Item
     public boolean deleteOrderItem(int itemId) {
         String sql = "DELETE FROM Order_Items WHERE id = ?";
 
@@ -149,7 +149,7 @@ public class OrderItemDao {
         return false;
     }
 
-    // ─── Delete All Items For Order ──────────────────────────────
+    //  Delete All Items For Order
     public boolean deleteAllItemsForOrder(int orderId) {
         String sql = "DELETE FROM Order_Items WHERE order_id = ?";
 
@@ -168,7 +168,7 @@ public class OrderItemDao {
         return false;
     }
 
-    // ─── Helper Class for Items with Food Name ───────────────────
+    //  Helper Class for Items with Food Name
     public static class OrderItemWithName {
         private int id;
         private int orderId;

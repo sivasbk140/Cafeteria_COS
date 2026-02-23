@@ -18,7 +18,7 @@ public class FoodMenu {
         this.updatedOn = updatedOn;
     }
 
-    // ─── Getters ─────────────────────────────────────────────────
+
 
     public int getId() {
         return id;
@@ -36,7 +36,7 @@ public class FoodMenu {
         return updatedOn;
     }
 
-    // ─── Setters ─────────────────────────────────────────────────
+
 
     public void setId(int id) {
         this.id = id;
@@ -54,7 +54,7 @@ public class FoodMenu {
         this.updatedOn = updatedOn;
     }
 
-    // ─── toString ────────────────────────────────────────────────
+
 
     @Override
     public String toString() {

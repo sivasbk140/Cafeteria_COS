@@ -23,7 +23,7 @@ public class FoodMenuItemMap {
   this.updatedOn   = updatedOn;
  }
 
- // ─── Getters ─────────────────────────────────────────────────
+
 
  public int getId() {
   return id;
@@ -49,7 +49,7 @@ public class FoodMenuItemMap {
   return updatedOn;
  }
 
- // ─── Setters ─────────────────────────────────────────────────
+
 
  public void setId(int id) {
   this.id = id;
@@ -75,7 +75,7 @@ public class FoodMenuItemMap {
   this.updatedOn = updatedOn;
  }
 
- // ─── toString ────────────────────────────────────────────────
+
 
  @Override
  public String toString() {

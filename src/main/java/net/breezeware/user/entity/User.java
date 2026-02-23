@@ -25,7 +25,7 @@ public class User {
         this.updatedOn = updatedOn;
     }
 
-    // ─── Getters ─────────────────────────────────────────────────
+
 
     public int getId() {
         return id;
@@ -55,7 +55,7 @@ public class User {
         return updatedOn;
     }
 
-    // ─── Setters ─────────────────────────────────────────────────
+
 
     public void setId(int id) {
         this.id = id;
@@ -85,7 +85,7 @@ public class User {
         this.updatedOn = updatedOn;
     }
 
-    // ─── toString ────────────────────────────────────────────────
+
 
     @Override
     public String toString() {

@@ -29,12 +29,12 @@ public class StaffOrderService {
         this.scanner = new Scanner(System.in);
     }
 
-    // ─── View Active Orders ──────────────────────────────────────
+    //  View Active Orders
     public void viewActiveOrders() {
         List<OrderSummaryDTO> orders = orderDao.getActiveOrders();
 
         if (orders.isEmpty()) {
-            System.out.println("\n❌ No active orders.");
+            System.out.println("\n No active orders.");
             return;
         }
 
@@ -53,12 +53,12 @@ public class StaffOrderService {
         System.out.println("────────────────────────────────────────────────────────────────────");
     }
 
-    // ─── View Cancelled Orders ───────────────────────────────────
+    // View Cancelled Orders
     public void viewCancelledOrders() {
         List<Order> orders = orderDao.getOrdersByStatus(OrderStatus.ORDER_CANCELLED);
 
         if (orders.isEmpty()) {
-            System.out.println("\n❌ No cancelled orders.");
+            System.out.println("\n No cancelled orders.");
             return;
         }
 
@@ -76,12 +76,12 @@ public class StaffOrderService {
         System.out.println("─────────────────────────────────────────────");
     }
 
-    // ─── View Completed Orders ───────────────────────────────────
+    // View Completed Orders
     public void viewCompletedOrders() {
         List<Order> orders = orderDao.getOrdersByStatus(OrderStatus.ORDER_DELIVERED);
 
         if (orders.isEmpty()) {
-            System.out.println("\n❌ No completed orders.");
+            System.out.println("\n No completed orders.");
             return;
         }
 
@@ -99,7 +99,7 @@ public class StaffOrderService {
         System.out.println("─────────────────────────────────────────────");
     }
 
-    // ─── View Order Details ──────────────────────────────────────
+    //  View Order Details
     public void viewOrderDetails() {
         System.out.print("\nEnter Order ID: ");
         int orderId;
@@ -112,7 +112,7 @@ public class StaffOrderService {
 
         Order order = orderDao.getOrderById(orderId);
         if (order == null) {
-            System.out.println("❌ Order not found.");
+            System.out.println(" Order not found.");
             return;
         }
 
@@ -150,7 +150,7 @@ public class StaffOrderService {
         System.out.println("────────────────────────────────────────────────────────");
     }
 
-    // ─── Update Order Status ─────────────────────────────────────
+    //  Update Order Status
     public void updateOrderStatus() {
         System.out.print("\nEnter Order ID: ");
         int orderId;
@@ -163,7 +163,7 @@ public class StaffOrderService {
 
         Order order = orderDao.getOrderById(orderId);
         if (order == null) {
-            System.out.println("❌ Order not found.");
+            System.out.println(" Order not found.");
             return;
         }
 
@@ -179,7 +179,7 @@ public class StaffOrderService {
         } else if (currentStatus == OrderStatus.PENDING_DELIVERY) {
             System.out.println("1. ORDER_DELIVERED (Mark as delivered)");
         } else {
-            System.out.println("❌ Cannot update status from " + currentStatus);
+            System.out.println(" Cannot update status from " + currentStatus);
             return;
         }
 
@@ -216,12 +216,12 @@ public class StaffOrderService {
         if (newStatus != null) {
             boolean success = orderDao.updateOrderStatus(orderId, newStatus);
             if (success) {
-                System.out.println("✔ Order status updated to: " + newStatus);
+                System.out.println(" Order status updated to: " + newStatus);
                 if (newStatus == OrderStatus.WAITING_FOR_DELIVERY) {
-                    System.out.println("📢 Delivery staff has been notified (mock)");
+                    System.out.println(" Delivery staff has been notified (mock)");
                 }
             } else {
-                System.out.println("❌ Failed to update order status.");
+                System.out.println(" Failed to update order status.");
             }
         }
     }

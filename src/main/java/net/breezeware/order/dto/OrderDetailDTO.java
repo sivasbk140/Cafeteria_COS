@@ -37,7 +37,7 @@ public class OrderDetailDTO {
         this.createdOn        = createdOn;
     }
 
-    // ─── Getters ─────────────────────────────────────────────────
+
 
     public int getOrderId() {
         return orderId;
@@ -79,7 +79,6 @@ public class OrderDetailDTO {
         return createdOn;
     }
 
-    // ─── Setters ─────────────────────────────────────────────────
 
     public void setOrderId(int orderId) {
         this.orderId = orderId;
@@ -121,7 +120,7 @@ public class OrderDetailDTO {
         this.createdOn = createdOn;
     }
 
-    // ─── toString ────────────────────────────────────────────────
+
 
     @Override
     public String toString() {

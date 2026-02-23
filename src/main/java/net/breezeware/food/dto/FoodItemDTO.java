@@ -22,7 +22,7 @@ public class FoodItemDTO {
         this.description = description;
     }
 
-    // ─── Getters ─────────────────────────────────────────────────
+
 
     public int getId() {
         return id;
@@ -48,7 +48,7 @@ public class FoodItemDTO {
         return description;
     }
 
-    // ─── Setters ─────────────────────────────────────────────────
+
 
     public void setId(int id) {
         this.id = id;
@@ -74,7 +74,7 @@ public class FoodItemDTO {
         this.description = description;
     }
 
-    // ─── toString ────────────────────────────────────────────────
+
 
     @Override
     public String toString() {

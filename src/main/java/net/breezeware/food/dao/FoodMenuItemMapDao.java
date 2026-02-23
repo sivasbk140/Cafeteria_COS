@@ -9,7 +9,7 @@ import java.util.List;
 
 public class FoodMenuItemMapDao {
 
-    // ─── Assign Food Item to Menu ────────────────────────────────
+    //  Assign Food Item to Menu
     public boolean assignFoodItemToMenu(int menuId, int foodItemId) {
         String sql = "INSERT INTO Food_Menu_Items_Map (menu_id, food_item_id, is_available, created_on, updated_on) " +
                 "VALUES (?, ?, 1, datetime('now'), datetime('now'))";
@@ -31,7 +31,7 @@ public class FoodMenuItemMapDao {
         return false;
     }
 
-    // ─── Remove Food Item from Menu ──────────────────────────────
+    //  Remove Food Item from Menu
     public boolean removeFoodItemFromMenu(int menuId, int foodItemId) {
         String sql = "DELETE FROM Food_Menu_Items_Map WHERE menu_id = ? AND food_item_id = ?";
 
@@ -83,7 +83,7 @@ public class FoodMenuItemMapDao {
         return mappings;
     }
 
-    // ─── Get All Food Item IDs for a Menu ────────────────────────
+    //  Get All Food Item IDs for a Menu
     public List<Integer> getFoodItemIdsByMenuId(int menuId) {
         List<Integer> itemIds = new ArrayList<>();
         String sql = "SELECT food_item_id FROM Food_Menu_Items_Map WHERE menu_id = ? AND is_available = 1";
@@ -106,7 +106,7 @@ public class FoodMenuItemMapDao {
         return itemIds;
     }
 
-    // ─── Toggle Availability ─────────────────────────────────────
+
     public boolean toggleAvailability(int menuId, int foodItemId, boolean isAvailable) {
         String sql = "UPDATE Food_Menu_Items_Map SET is_available = ?, updated_on = datetime('now') " +
                 "WHERE menu_id = ? AND food_item_id = ?";

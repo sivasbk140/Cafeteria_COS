@@ -22,7 +22,7 @@ public class OrderSummaryDTO {
         this.createdOn  = createdOn;
     }
 
-    // ─── Getters ─────────────────────────────────────────────────
+
 
     public int getOrderId() {
         return orderId;
@@ -44,7 +44,7 @@ public class OrderSummaryDTO {
         return createdOn;
     }
 
-    // ─── Setters ─────────────────────────────────────────────────
+
 
     public void setOrderId(int orderId) {
         this.orderId = orderId;
@@ -66,7 +66,7 @@ public class OrderSummaryDTO {
         this.createdOn = createdOn;
     }
 
-    // ─── toString ────────────────────────────────────────────────
+
 
     @Override
     public String toString() {

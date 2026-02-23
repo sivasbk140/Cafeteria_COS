@@ -53,14 +53,14 @@ public class CartItemDTO {
         this.quantity = quantity;
     }
 
-    // ─── Helper Methods ──────────────────────────────────────────
+    // Helper Methods
 
     // Calculate total price for this cart item
     public double getTotalPrice() {
         return price * quantity;
     }
 
-    // ─── toString ────────────────────────────────────────────────
+
 
     @Override
     public String toString() {

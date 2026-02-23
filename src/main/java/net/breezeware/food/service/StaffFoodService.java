@@ -19,7 +19,7 @@ public class StaffFoodService extends FoodService {
         this.scanner = new Scanner(System.in);
     }
 
-    // ─── Main Staff Menu ─────────────────────────────────────────
+    //  Main Staff Menu
     public void showStaffMenu() {
         while (true) {
             System.out.println("\n=== STAFF MENU ===");
@@ -55,7 +55,7 @@ public class StaffFoodService extends FoodService {
         }
     }
 
-    // ─── View Full Weekly Menu ───────────────────────────────────
+    //  View Full Weekly Menu
     public void viewFullWeekMenu() {
         System.out.println("\n=== FULL WEEKLY MENU ===");
         List<MenuViewDTO> menuItems = customerMenuDao.getFullWeekMenu();

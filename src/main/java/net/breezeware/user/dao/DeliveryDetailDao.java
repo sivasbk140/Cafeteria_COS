@@ -9,7 +9,7 @@ import java.util.List;
 
 public class DeliveryDetailDao {
 
-    // ─── Add Delivery Detail ─────────────────────────────────────
+    // Add Delivery Detail
     public int addDeliveryDetail(int userId, String email, String phoneNumber, String location) {
         String sql = "INSERT INTO Delivery_Details (user_id, email, phone_number, location, created_on, updated_on) " +
                 "VALUES (?, ?, ?, ?, datetime('now'), datetime('now'))";
@@ -39,7 +39,7 @@ public class DeliveryDetailDao {
         return -1;
     }
 
-    // ─── Get Delivery Details By User ID ─────────────────────────
+    // Get Delivery Details By User ID
     public List<DeliveryDetail> getDeliveryDetailsByUserId(int userId) {
         List<DeliveryDetail> details = new ArrayList<>();
         String sql = "SELECT id, user_id, email, phone_number, location, created_on, updated_on FROM Delivery_Details WHERE user_id = ?";
@@ -71,7 +71,7 @@ public class DeliveryDetailDao {
         return details;
     }
 
-    // ─── Get Delivery Detail By ID ───────────────────────────────
+    // Get Delivery Detail By ID
     public DeliveryDetail getDeliveryDetailById(int id) {
         String sql = "SELECT id, user_id, email, phone_number, location, created_on, updated_on FROM Delivery_Details WHERE id = ?";
 
@@ -101,7 +101,7 @@ public class DeliveryDetailDao {
         return null;
     }
 
-    // ─── Update Delivery Detail ──────────────────────────────────
+    //  Update Delivery Detail
     public boolean updateDeliveryDetail(int id, String email, String phoneNumber, String location) {
         String sql = "UPDATE Delivery_Details SET email = ?, phone_number = ?, location = ?, updated_on = datetime('now') WHERE id = ?";
 
@@ -124,7 +124,7 @@ public class DeliveryDetailDao {
         return false;
     }
 
-    // ─── Delete Delivery Detail ──────────────────────────────────
+    //  Delete Delivery Detail
     public boolean deleteDeliveryDetail(int id) {
         String sql = "DELETE FROM Delivery_Details WHERE id = ?";
 

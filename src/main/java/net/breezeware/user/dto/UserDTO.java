@@ -19,7 +19,7 @@ public class UserDTO {
         this.role  = role;
     }
 
-    // ─── Getters ─────────────────────────────────────────────────
+
 
     public int getId() {
         return id;
@@ -37,7 +37,7 @@ public class UserDTO {
         return role;
     }
 
-    // ─── Setters ─────────────────────────────────────────────────
+
 
     public void setId(int id) {
         this.id = id;
@@ -55,7 +55,7 @@ public class UserDTO {
         this.role = role;
     }
 
-    // ─── toString ────────────────────────────────────────────────
+
 
     @Override
     public String toString() {

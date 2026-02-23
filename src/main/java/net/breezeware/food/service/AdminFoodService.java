@@ -26,7 +26,7 @@ public class AdminFoodService extends FoodService {
         this.scanner = new Scanner(System.in);
     }
 
-    // ─── View All Food Items ─────────────────────────────────────
+
     public void viewAllFoodItems() {
         List<FoodItemDTO> items = foodItemDao.getAllFoodItems();
 
@@ -53,7 +53,7 @@ public class AdminFoodService extends FoodService {
         System.out.println("────────────────────────────────────────────────────────────────────────────────");
     }
 
-    // ─── View Menu By Day ────────────────────────────────────────
+    //  View Menu By Day
     public void viewMenuByDay() {
         System.out.print("\nEnter day (MONDAY/TUESDAY/.../SUNDAY): ");
         String dayInput = scanner.nextLine().trim();
@@ -68,7 +68,7 @@ public class AdminFoodService extends FoodService {
         displayMenu(menuItems);
     }
 
-    // ─── Add Food Item ───────────────────────────────────────────
+    //  Add Food Item
     public void addFoodItem() {
         System.out.println("\n=== ADD FOOD ITEM ===");
 
@@ -96,7 +96,7 @@ public class AdminFoodService extends FoodService {
         }
     }
 
-    // ─── Update Food Item ────────────────────────────────────────
+    //  Update Food Item
     public void updateFoodItem() {
         System.out.println("\n=== UPDATE FOOD ITEM ===");
 
@@ -143,7 +143,7 @@ public class AdminFoodService extends FoodService {
         }
     }
 
-    // ─── Delete Food Item ────────────────────────────────────────
+    //  Delete Food Item
     public void deleteFoodItem() {
         System.out.println("\n=== DELETE FOOD ITEM ===");
 
@@ -175,7 +175,7 @@ public class AdminFoodService extends FoodService {
         }
     }
 
-    // ─── Manage Menus ────────────────────────────────────────────
+    //  Manage Menus
     public void manageMenus() {
         while (true) {
             System.out.println("\n=== MANAGE MENUS ===");

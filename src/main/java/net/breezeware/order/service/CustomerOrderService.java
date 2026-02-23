@@ -52,7 +52,7 @@ public class CustomerOrderService {
             FoodItemDTO foodItem = foodItemDao.getFoodItemByName(foodName);
 
             if (foodItem == null) {
-                System.out.println("❌ Food item '" + foodName + "' not found. Please check spelling.");
+                System.out.println(" Food item '" + foodName + "' not found. Please check spelling.");
                 continue;
             }
 
@@ -61,17 +61,17 @@ public class CustomerOrderService {
             try {
                 quantity = Integer.parseInt(scanner.nextLine().trim());
                 if (quantity <= 0) {
-                    System.out.println("❌ Quantity must be positive.");
+                    System.out.println(" Quantity must be positive.");
                     continue;
                 }
             } catch (NumberFormatException e) {
-                System.out.println("❌ Invalid quantity.");
+                System.out.println(" Invalid quantity.");
                 continue;
             }
 
             // Check stock availability
             if (!foodItemDao.hasEnoughStock(foodItem.getId(), quantity)) {
-                System.out.println("❌ Not enough stock for " + foodItem.getName());
+                System.out.println(" Not enough stock for " + foodItem.getName());
                 System.out.println("   Available: " + foodItem.getQuantity());
                 System.out.println("   Requested: " + quantity);
                 continue;
@@ -83,11 +83,11 @@ public class CustomerOrderService {
                 // Update quantity
                 int newQuantity = existingItem.getQuantity() + quantity;
                 if (!foodItemDao.hasEnoughStock(foodItem.getId(), newQuantity)) {
-                    System.out.println("❌ Not enough stock. You already have " + existingItem.getQuantity() + " in cart.");
+                    System.out.println(" Not enough stock. You already have " + existingItem.getQuantity() + " in cart.");
                     continue;
                 }
                 existingItem.setQuantity(newQuantity);
-                System.out.printf("✔ Updated: %dx %s = ₹%.2f%n",
+                System.out.printf(" Updated: %dx %s = ₹%.2f%n",
                         newQuantity, existingItem.getFoodItemName(), existingItem.getTotalPrice());
             } else {
                 // Add new item to cart
@@ -98,7 +98,7 @@ public class CustomerOrderService {
                         quantity
                 );
                 cart.add(cartItem);
-                System.out.printf("✔ Added: %dx %s = ₹%.2f%n",
+                System.out.printf(" Added: %dx %s = ₹%.2f%n",
                         quantity, cartItem.getFoodItemName(), cartItem.getTotalPrice());
             }
 
@@ -122,7 +122,7 @@ public class CustomerOrderService {
     // ─── View Cart ───────────────────────────────────────────────
     public void viewCart() {
         if (cart.isEmpty()) {
-            System.out.println("\n❌ Your cart is empty.");
+            System.out.println("\n Your cart is empty.");
             return;
         }
 
@@ -228,7 +228,7 @@ public class CustomerOrderService {
                         viewCart();
                     } else {
                         FoodItemDTO foodItem = foodItemDao.getFoodItemById(item.getFoodItemId());
-                        System.out.println("❌ Not enough stock. Available: " + foodItem.getQuantity());
+                        System.out.println(" Not enough stock. Available: " + foodItem.getQuantity());
                     }
                 } catch (NumberFormatException e) {
                     System.out.println("Invalid quantity.");
@@ -236,7 +236,7 @@ public class CustomerOrderService {
             }
             case 2 -> {
                 cart.remove(sno - 1);
-                System.out.println("✔ Item removed from cart.");
+                System.out.println(" Item removed from cart.");
                 if (!cart.isEmpty()) {
                     viewCart();
                 } else {
@@ -253,14 +253,14 @@ public class CustomerOrderService {
         String confirm = scanner.nextLine().trim();
         if (confirm.equalsIgnoreCase("yes")) {
             cart.clear();
-            System.out.println("✔ Cart cleared.");
+            System.out.println(" Cart cleared.");
         }
     }
 
     // ─── Place Order ─────────────────────────────────────────────
     private void placeOrder() {
         if (cart.isEmpty()) {
-            System.out.println("❌ Cart is empty. Cannot place order.");
+            System.out.println(" Cart is empty. Cannot place order.");
             return;
         }
 
@@ -268,7 +268,7 @@ public class CustomerOrderService {
         for (CartItemDTO item : cart) {
             if (!foodItemDao.hasEnoughStock(item.getFoodItemId(), item.getQuantity())) {
                 FoodItemDTO foodItem = foodItemDao.getFoodItemById(item.getFoodItemId());
-                System.out.println("❌ Stock changed! " + item.getFoodItemName() + " only has " + foodItem.getQuantity() + " left.");
+                System.out.println(" Stock changed! " + item.getFoodItemName() + " only has " + foodItem.getQuantity() + " left.");
                 System.out.println("Please update your cart.");
                 return;
             }
@@ -303,7 +303,7 @@ public class CustomerOrderService {
         int orderId = orderDao.createOrder(currentUserId, OrderStatus.PLACED_ORDER);
 
         if (orderId == -1) {
-            System.out.println("❌ Failed to create order.");
+            System.out.println(" Failed to create order.");
             return;
         }
 
@@ -317,19 +317,19 @@ public class CustomerOrderService {
         // Save delivery details
         deliveryDetailDao.addDeliveryDetail(currentUserId, email, phone, location);
 
-        System.out.println("\n✔ Order placed successfully! (Order ID: " + orderId + ")");
-        System.out.println("📧 Confirmation sent to " + email);
+        System.out.println("\n Order placed successfully! (Order ID: " + orderId + ")");
+        System.out.println(" Confirmation sent to " + email);
 
         // Clear cart
         cart.clear();
     }
 
-    // ─── View My Orders ──────────────────────────────────────────
+    //  View My Orders
     public void viewMyOrders() {
         List<OrderSummaryDTO> orders = orderDao.getOrderSummariesByUserId(currentUserId);
 
         if (orders.isEmpty()) {
-            System.out.println("\n❌ No orders found.");
+            System.out.println("\n No orders found.");
             return;
         }
 
@@ -348,7 +348,7 @@ public class CustomerOrderService {
         System.out.println("──────────────────────────────────────────────────────────────");
     }
 
-    // ─── View Order Details ──────────────────────────────────────
+    // View Order Details
     public void viewOrderDetails() {
         System.out.print("\nEnter Order ID: ");
         int orderId;
@@ -361,7 +361,7 @@ public class CustomerOrderService {
 
         Order order = orderDao.getOrderById(orderId);
         if (order == null || order.getUserId() != currentUserId) {
-            System.out.println("❌ Order not found.");
+            System.out.println(" Order not found.");
             return;
         }
 
@@ -387,7 +387,7 @@ public class CustomerOrderService {
         System.out.println("────────────────────────────────────────────────────────");
     }
 
-    // ─── Cancel Order ────────────────────────────────────────────
+    //  Cancel Order
     public void cancelOrder() {
         System.out.print("\nEnter Order ID to cancel: ");
         int orderId;
@@ -400,12 +400,12 @@ public class CustomerOrderService {
 
         Order order = orderDao.getOrderById(orderId);
         if (order == null || order.getUserId() != currentUserId) {
-            System.out.println("❌ Order not found.");
+            System.out.println(" Order not found.");
             return;
         }
 
         if (!order.getStatus().isCancellable()) {
-            System.out.println("❌ Cannot cancel order.");
+            System.out.println(" Cannot cancel order.");
             System.out.println("   Reason: Order status is " + order.getStatus());
             System.out.println("   Only orders with status PLACED_ORDER can be cancelled.");
             return;
@@ -434,7 +434,7 @@ public class CustomerOrderService {
         System.out.println("✔ Stock restored.");
     }
 
-    // ─── Helper Methods ──────────────────────────────────────────
+
 
     private CartItemDTO findInCart(int foodItemId) {
         for (CartItemDTO item : cart) {

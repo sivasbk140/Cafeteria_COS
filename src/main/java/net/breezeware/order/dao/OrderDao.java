@@ -11,7 +11,7 @@ import java.util.List;
 
 public class OrderDao {
 
-    // ─── Create Order ────────────────────────────────────────────
+    //  Create Order
     public int createOrder(int userId, OrderStatus status) {
         String sql = "INSERT INTO Order_Table (user_id, status, created_on, updated_on) " +
                 "VALUES (?, ?, datetime('now'), datetime('now'))";
@@ -39,7 +39,7 @@ public class OrderDao {
         return -1;
     }
 
-    // ─── Get Order By ID ─────────────────────────────────────────
+    //  Get Order By ID
     public Order getOrderById(int orderId) {
         String sql = "SELECT id, user_id, status, created_on, updated_on FROM Order_Table WHERE id = ?";
 
@@ -70,7 +70,7 @@ public class OrderDao {
         return null;
     }
 
-    // ─── Get Orders By User ID ───────────────────────────────────
+    //  Get Orders By User ID
     public List<Order> getOrdersByUserId(int userId) {
         List<Order> orders = new ArrayList<>();
         String sql = "SELECT id, user_id, status, created_on, updated_on FROM Order_Table WHERE user_id = ? ORDER BY created_on DESC";
@@ -103,7 +103,7 @@ public class OrderDao {
         return orders;
     }
 
-    // ─── Get Order Summaries By User (with total price) ──────────
+    // Get Order Summaries By User (with total price)
     public List<OrderSummaryDTO> getOrderSummariesByUserId(int userId) {
         List<OrderSummaryDTO> summaries = new ArrayList<>();
 
@@ -143,7 +143,7 @@ public class OrderDao {
         return summaries;
     }
 
-    // ─── Get Orders By Status ────────────────────────────────────
+    // Get Orders By Status
     public List<Order> getOrdersByStatus(OrderStatus status) {
         List<Order> orders = new ArrayList<>();
         String sql = "SELECT id, user_id, status, created_on, updated_on FROM Order_Table WHERE status = ? ORDER BY created_on ASC";
@@ -173,7 +173,7 @@ public class OrderDao {
         return orders;
     }
 
-    // ─── Get Active Orders (for staff) ───────────────────────────
+    // Get Active Orders (for staff)
     public List<OrderSummaryDTO> getActiveOrders() {
         List<OrderSummaryDTO> summaries = new ArrayList<>();
 
@@ -211,7 +211,7 @@ public class OrderDao {
         return summaries;
     }
 
-    // ─── Update Order Status ─────────────────────────────────────
+    //  Update Order Status
     public boolean updateOrderStatus(int orderId, OrderStatus newStatus) {
         String sql = "UPDATE Order_Table SET status = ?, updated_on = datetime('now') WHERE id = ?";
 
@@ -232,7 +232,7 @@ public class OrderDao {
         return false;
     }
 
-    // ─── Get Total Price for Order ───────────────────────────────
+    // Get Total Price for Order
     public double getTotalPrice(int orderId) {
         String sql = "SELECT COALESCE(SUM(price * quantity), 0) AS total FROM Order_Items WHERE order_id = ?";
 
@@ -254,7 +254,7 @@ public class OrderDao {
         return 0.0;
     }
 
-    // ─── Delete Order (cascade delete items first) ───────────────
+    //  Delete Order (cascade delete items first)
     public boolean deleteOrder(int orderId) {
         String deleteItemsSql = "DELETE FROM Order_Items WHERE order_id = ?";
         String deleteOrderSql = "DELETE FROM Order_Table WHERE id = ?";

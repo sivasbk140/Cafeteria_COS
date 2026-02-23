@@ -33,19 +33,19 @@ public class CafeteriaApplication {
             return;
         }
 
-        // Route to appropriate menu based on role
+        // role routing
         switch (loggedInUser.getRole()) {
             case ADMIN    -> adminMenu();
             case STAFF    -> staffMenu(loggedInUser);
             case CUSTOMER -> customerMenu(loggedInUser);
         }
 
-        // Close DB connection on exit
+
         DBConnection.closeConnection();
         scanner.close();
     }
 
-    // ─── Role Selection ──────────────────────────────────────────
+
     private static Role selectRole() {
         System.out.println("\nSelect Role:");
         System.out.println("1. ADMIN");
@@ -68,7 +68,7 @@ public class CafeteriaApplication {
         };
     }
 
-    // ─── Admin Menu ──────────────────────────────────────────────
+
     private static void adminMenu() {
         AdminFoodService adminService = new AdminFoodService();
 
@@ -107,14 +107,14 @@ public class CafeteriaApplication {
         }
     }
 
-    // ─── Staff Menu ──────────────────────────────────────────────
+
     private static void staffMenu(UserDTO user) {
         StaffFoodService staffService = new StaffFoodService();
         staffService.showStaffMenu();
         System.out.println("\nLogging out..."); 
     }
 
-    // ─── Customer Menu ───────────────────────────────────────────
+
     private static void customerMenu(UserDTO user) {
         CustomerFoodService customerService = new CustomerFoodService(user.getId());
         customerService.showCustomerMenu();

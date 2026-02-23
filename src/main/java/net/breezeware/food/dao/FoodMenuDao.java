@@ -9,7 +9,7 @@ import java.util.List;
 
 public class FoodMenuDao {
 
-    // ─── Get All Menus ───────────────────────────────────────────
+    // get all menu as our choice
     public List<FoodMenu> getAllMenus() {
         List<FoodMenu> menus = new ArrayList<>();
         String sql = "SELECT id, category, created_on, updated_on FROM Food_Menu";
@@ -36,7 +36,7 @@ public class FoodMenuDao {
         return menus;
     }
 
-    // ─── Get Menu By ID ──────────────────────────────────────────
+    // Get Menu By ID
     public FoodMenu getMenuById(int id) {
         String sql = "SELECT id, category, created_on, updated_on FROM Food_Menu WHERE id = ?";
 
@@ -63,7 +63,7 @@ public class FoodMenuDao {
         return null;
     }
 
-    // ─── Create New Menu ─────────────────────────────────────────
+    //  Create New Menu
     public int createMenu(String category) {
         String sql = "INSERT INTO Food_Menu (category, created_on, updated_on) " +
                 "VALUES (?, datetime('now'), datetime('now'))";
@@ -89,7 +89,7 @@ public class FoodMenuDao {
         return -1;
     }
 
-    // ─── Delete Menu ─────────────────────────────────────────────
+    // Delete Menu
     public boolean deleteMenu(int menuId) {
         // First delete from Availability_Map and Food_Menu_Items_Map
         String deleteAvailabilitySql = "DELETE FROM Availability_Map WHERE menu_id = ?";
@@ -125,7 +125,7 @@ public class FoodMenuDao {
         return false;
     }
 
-    // ─── Get Menus By Category ───────────────────────────────────
+    // Get Menus By Category
     public List<FoodMenu> getMenusByCategory(String category) {
         List<FoodMenu> menus = new ArrayList<>();
         String sql = "SELECT id, category, created_on, updated_on FROM Food_Menu WHERE category = ?";

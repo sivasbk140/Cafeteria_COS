@@ -10,7 +10,7 @@ public enum MenuDay {
     SATURDAY,
     SUNDAY;
 
-    // safely convert String from DB to enum
+
     public static MenuDay fromString(String day) {
         try {
             return MenuDay.valueOf(day.toUpperCase().trim());
