@@ -23,7 +23,7 @@ public class CustomerOrderService {
     private final DeliveryDetailDao deliveryDetailDao;
     private final Scanner scanner;
     private final List<CartItemDTO> cart;
-    private int currentUserId;
+    private final int currentUserId;
 
     public CustomerOrderService(int userId) {
         this.orderDao = new OrderDao();
@@ -35,7 +35,7 @@ public class CustomerOrderService {
         this.currentUserId = userId;
     }
 
-    // ─── Start Shopping (Add Items to Cart) ──────────────────────
+    // ─── Start Shopping (Add Items to Cart)
     public void startShopping() {
         System.out.println("\n=== START SHOPPING ===");
         System.out.println("(Tip: View the menu first to see available items and prices)");
@@ -119,7 +119,7 @@ public class CustomerOrderService {
         }
     }
 
-    // ─── View Cart ───────────────────────────────────────────────
+    // ─── View Cart
     public void viewCart() {
         if (cart.isEmpty()) {
             System.out.println("\n Your cart is empty.");
@@ -142,7 +142,7 @@ public class CustomerOrderService {
         System.out.println("────────────────────────────────────────────────────────");
     }
 
-    // ─── Cart Menu ───────────────────────────────────────────────
+    // ─── Cart Menu
     private void cartMenu() {
         while (true) {
             System.out.println("\n1. Proceed to Checkout");
@@ -257,7 +257,7 @@ public class CustomerOrderService {
         }
     }
 
-    // ─── Place Order ─────────────────────────────────────────────
+    // ─── Place Order
     private void placeOrder() {
         if (cart.isEmpty()) {
             System.out.println(" Cart is empty. Cannot place order.");

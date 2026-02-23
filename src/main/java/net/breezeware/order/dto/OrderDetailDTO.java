@@ -133,7 +133,7 @@ public class OrderDetailDTO {
                 '}';
     }
 
-    // ─── Nested DTO for Order Items ──────────────────────────────
+    // Nested DTO for Order Items
 
     public static class OrderItemDetailDTO {
         private String foodItemName;

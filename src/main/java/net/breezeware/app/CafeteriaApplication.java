@@ -3,6 +3,7 @@ package net.breezeware.app;
 import net.breezeware.food.service.AdminFoodService;
 import net.breezeware.food.service.CustomerFoodService;
 import net.breezeware.food.service.StaffFoodService;
+import net.breezeware.order.service.DeliveryStaffFoodService;
 import net.breezeware.user.dto.UserDTO;
 import net.breezeware.user.entity.Role;
 import net.breezeware.user.service.UserService;
@@ -38,6 +39,8 @@ public class CafeteriaApplication {
             case ADMIN    -> adminMenu();
             case STAFF    -> staffMenu(loggedInUser);
             case CUSTOMER -> customerMenu(loggedInUser);
+            case DELIVERY_STAFF -> deliveryStaffMenu(loggedInUser);
+
         }
 
 
@@ -51,6 +54,7 @@ public class CafeteriaApplication {
         System.out.println("1. ADMIN");
         System.out.println("2. STAFF");
         System.out.println("3. CUSTOMER");
+        System.out.println("4. DELIVERY_STAFF");
         System.out.print("Enter choice: ");
 
         int choice;
@@ -64,6 +68,7 @@ public class CafeteriaApplication {
             case 1 -> Role.ADMIN;
             case 2 -> Role.STAFF;
             case 3 -> Role.CUSTOMER;
+            case 4 -> Role.DELIVERY_STAFF;
             default -> null;
         };
     }
@@ -118,6 +123,13 @@ public class CafeteriaApplication {
     private static void customerMenu(UserDTO user) {
         CustomerFoodService customerService = new CustomerFoodService(user.getId());
         customerService.showCustomerMenu();
+        System.out.println("\nLogging out...");
+    }
+
+    private static void deliveryStaffMenu(UserDTO user)
+    {
+        DeliveryStaffFoodService deliveryService = new DeliveryStaffFoodService();
+        deliveryService.updateOrderStatus();
         System.out.println("\nLogging out...");
     }
 }

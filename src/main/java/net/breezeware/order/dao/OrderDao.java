@@ -281,4 +281,23 @@ public class OrderDao {
 
         return false;
     }
+    public boolean updateStatus(int orderId, OrderStatus currentStatus) {
+        String sql = "UPDATE Order_Table SET status = ?, updated_on = datetime('now') WHERE id = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, currentStatus.name());
+            pstmt.setInt(2, orderId);
+
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            System.out.println("ERROR: Failed to update order status.");
+            e.printStackTrace();
+        }
+
+        return false;
+    }
 }
