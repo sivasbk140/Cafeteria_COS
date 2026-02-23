@@ -17,7 +17,7 @@ public class CafeteriaApplication {
 
     public static void main(String[] args) {
         System.out.println("=========================================");
-        System.out.println("     BREEZEWARE CAFETERIA SYSTEM");
+        System.out.println("      CAFETERIA SYSTEM");
         System.out.println("=========================================");
 
         Role selectedRole = selectRole();
