@@ -3,7 +3,7 @@ package net.breezeware.order.service;
 import net.breezeware.order.dao.OrderDao;
 
 import net.breezeware.order.entity.Order;
-import net.breezeware.order.entity.OrderStatus;
+import net.breezeware.order.enumeration.OrderStatus;
 
 
 import java.util.Scanner;

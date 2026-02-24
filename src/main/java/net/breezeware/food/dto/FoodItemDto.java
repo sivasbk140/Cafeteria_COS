@@ -1,6 +1,6 @@
 package net.breezeware.food.dto;
 
-public class FoodItemDTO {
+public class FoodItemDto {
 
     private int id;
     private String name;
@@ -9,10 +9,8 @@ public class FoodItemDTO {
     private String category;
     private String description;
 
-    public FoodItemDTO() {
-    }
 
-    public FoodItemDTO(int id, String name, double price, int quantity,
+    public FoodItemDto(int id, String name, double price, int quantity,
                        String category, String description) {
         this.id          = id;
         this.name        = name;

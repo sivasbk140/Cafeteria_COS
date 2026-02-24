@@ -1,8 +1,8 @@
 package net.breezeware.food.service;
 
 import net.breezeware.food.dao.CustomerMenuDao;
-import net.breezeware.food.dto.MenuViewDTO;
-import net.breezeware.food.entity.MenuDay;
+import net.breezeware.food.dto.MenuViewDto;
+import net.breezeware.food.enumeration.MenuDay;
 
 import java.util.List;
 import java.util.Map;
@@ -17,29 +17,29 @@ public class FoodService {
     }
 
     // Display Menu (shared logic)
-    public void displayMenu(List<MenuViewDTO> menuItems) {
+    public void displayMenu(List<MenuViewDto> menuItems) {
         if (menuItems.isEmpty()) {
             System.out.println("No menu items available.");
             return;
         }
 
         // Group by day and category
-        Map<MenuDay, Map<String, List<MenuViewDTO>>> grouped = new LinkedHashMap<>();
+        Map<MenuDay, Map<String, List<MenuViewDto>>> grouped = new LinkedHashMap<>();
 
-        for (MenuViewDTO item : menuItems) {
+        for (MenuViewDto item : menuItems) {
             grouped.putIfAbsent(item.getDay(), new LinkedHashMap<>());
             grouped.get(item.getDay()).putIfAbsent(item.getMenuCategory(), new java.util.ArrayList<>());
             grouped.get(item.getDay()).get(item.getMenuCategory()).add(item);
         }
 
         // Display
-        for (Map.Entry<MenuDay, Map<String, List<MenuViewDTO>>> dayEntry : grouped.entrySet()) {
+        for (Map.Entry<MenuDay, Map<String, List<MenuViewDto>>> dayEntry : grouped.entrySet()) {
             System.out.println("\n=== " + dayEntry.getKey() + " ===");
 
-            for (Map.Entry<String, List<MenuViewDTO>> categoryEntry : dayEntry.getValue().entrySet()) {
+            for (Map.Entry<String, List<MenuViewDto>> categoryEntry : dayEntry.getValue().entrySet()) {
                 System.out.println("-- " + categoryEntry.getKey() + " --");
 
-                for (MenuViewDTO item : categoryEntry.getValue()) {
+                for (MenuViewDto item : categoryEntry.getValue()) {
                     System.out.printf("• %-20s | ₹%-7.2f | %s%n",
                             item.getFoodItemName(),
                             item.getPrice(),

@@ -1,6 +1,4 @@
-package net.breezeware.user.entity;
-
-import net.breezeware.food.entity.MenuDay;
+package net.breezeware.user.enumeration;
 
 public enum Role {
     ADMIN,

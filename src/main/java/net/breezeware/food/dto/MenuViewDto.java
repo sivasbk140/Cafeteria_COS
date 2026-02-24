@@ -1,8 +1,8 @@
 package net.breezeware.food.dto;
 
-import net.breezeware.food.entity.MenuDay;
+import net.breezeware.food.enumeration.MenuDay;
 
-public class MenuViewDTO {
+public class MenuViewDto {
 
     private MenuDay day;
     private String menuCategory;
@@ -11,20 +11,11 @@ public class MenuViewDTO {
     private String description;
     private int quantity;
 
-    public MenuViewDTO() {
-    }
 
-    public MenuViewDTO(MenuDay day, String menuCategory,
-                       String foodItemName, double price, String description, int quantity) {
-        this.day           = day;
-        this.menuCategory  = menuCategory;
-        this.foodItemName  = foodItemName;
-        this.price         = price;
-        this.description   = description;
-        this.quantity =quantity;
-    }
 
-    public MenuViewDTO(MenuDay day, String menuCategory,
+
+
+    public MenuViewDto(MenuDay day, String menuCategory,
                        String foodItemName, double price, String description) {
         this.day           = day;
         this.menuCategory  = menuCategory;

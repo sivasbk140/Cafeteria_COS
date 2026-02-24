@@ -1,10 +1,10 @@
 package net.breezeware.order.dto;
 
-import net.breezeware.order.entity.OrderStatus;
+import net.breezeware.order.enumeration.OrderStatus;
 
 import java.util.List;
 
-public class OrderDetailDTO {
+public class OrderDetailDto {
 
     private int orderId;
     private int userId;
@@ -17,10 +17,10 @@ public class OrderDetailDTO {
     private String deliveryLocation;
     private String createdOn;
 
-    public OrderDetailDTO() {
+    public OrderDetailDto() {
     }
 
-    public OrderDetailDTO(int orderId, int userId, String userName,
+    public OrderDetailDto(int orderId, int userId, String userName,
                           OrderStatus status, List<OrderItemDetailDTO> items,
                           double totalPrice, String deliveryEmail,
                           String deliveryPhone, String deliveryLocation,
@@ -141,15 +141,7 @@ public class OrderDetailDTO {
         private double price;
         private double totalPrice;
 
-        public OrderItemDetailDTO() {
-        }
 
-        public OrderItemDetailDTO(String foodItemName, int quantity, double price) {
-            this.foodItemName = foodItemName;
-            this.quantity     = quantity;
-            this.price        = price;
-            this.totalPrice   = price * quantity;
-        }
 
         public String getFoodItemName() {
             return foodItemName;

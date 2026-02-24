@@ -10,8 +10,7 @@ public class OrderItem {
     private String createdOn;
     private String updatedOn;
 
-    public OrderItem() {
-    }
+
 
     public OrderItem(int id, int orderId, int foodItemId,
                      double price, int quantity,

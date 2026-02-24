@@ -1,4 +1,4 @@
-package net.breezeware.food.entity;
+package net.breezeware.food.enumeration;
 
 public enum MenuDay {
 
@@ -8,7 +8,8 @@ public enum MenuDay {
     THURSDAY,
     FRIDAY,
     SATURDAY,
-    SUNDAY;
+    SUNDAY,
+    ALLDAY;
 
 
     public static MenuDay fromString(String day) {

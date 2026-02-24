@@ -1,7 +1,7 @@
 package net.breezeware.food.dao;
 
-import net.breezeware.food.dto.MenuViewDTO;
-import net.breezeware.food.entity.MenuDay;
+import net.breezeware.food.dto.MenuViewDto;
+import net.breezeware.food.enumeration.MenuDay;
 import net.breezeware.util.DBConnection;
 
 import java.sql.*;
@@ -11,8 +11,8 @@ import java.util.List;
 public class CustomerMenuDao {
 
 
-    public List<MenuViewDTO> getFullWeekMenu() {
-        List<MenuViewDTO> menuViews = new ArrayList<>();
+    public List<MenuViewDto> getFullWeekMenu() {
+        List<MenuViewDto> menuViews = new ArrayList<>();
 
         String sql = "SELECT a.menu_day, m.category, f.name, f.price, f.description " +
                 "FROM Availability_Map a " +
@@ -29,6 +29,7 @@ public class CustomerMenuDao {
                 "    WHEN 'FRIDAY' THEN 5 " +
                 "    WHEN 'SATURDAY' THEN 6 " +
                 "    WHEN 'SUNDAY' THEN 7 " +
+                "WHEN 'ALLDAY' THEN 8"+
                 "  END, " +
                 "  CASE m.category " +
                 "    WHEN 'BREAKFAST' THEN 1 " +
@@ -43,7 +44,7 @@ public class CustomerMenuDao {
             while (rs.next()) {
                 MenuDay day = MenuDay.fromString(rs.getString("menu_day"));
                 if (day != null) {
-                    MenuViewDTO dto = new MenuViewDTO(
+                    MenuViewDto dto = new MenuViewDto(
                             day,
                             rs.getString("category"),
                             rs.getString("name"),
@@ -63,8 +64,8 @@ public class CustomerMenuDao {
     }
 
 
-    public List<MenuViewDTO> getMenuByDay(MenuDay day) {
-        List<MenuViewDTO> menuViews = new ArrayList<>();
+    public List<MenuViewDto> getMenuByDay(MenuDay day) {
+        List<MenuViewDto> menuViews = new ArrayList<>();
 
         String sql = "SELECT a.menu_day, m.category, f.name, f.price, f.description " +
                 "FROM Availability_Map a " +
@@ -77,6 +78,7 @@ public class CustomerMenuDao {
                 "    WHEN 'BREAKFAST' THEN 1 " +
                 "    WHEN 'LUNCH' THEN 2 " +
                 "    WHEN 'DINNER' THEN 3 " +
+                "WHEN 'CHINESE' THEN 4"+
                 "  END";
 
         try (Connection conn = DBConnection.getConnection();
@@ -86,7 +88,7 @@ public class CustomerMenuDao {
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                MenuViewDTO dto = new MenuViewDTO(
+                MenuViewDto dto = new MenuViewDto(
                         day,
                         rs.getString("category"),
                         rs.getString("name"),

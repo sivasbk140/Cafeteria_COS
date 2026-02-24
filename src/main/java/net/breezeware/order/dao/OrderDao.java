@@ -1,8 +1,8 @@
 package net.breezeware.order.dao;
 
-import net.breezeware.order.dto.OrderSummaryDTO;
+import net.breezeware.order.dto.OrderSummaryDto;
 import net.breezeware.order.entity.Order;
-import net.breezeware.order.entity.OrderStatus;
+import net.breezeware.order.enumeration.OrderStatus;
 import net.breezeware.util.DBConnection;
 
 import java.sql.*;
@@ -70,42 +70,11 @@ public class OrderDao {
         return null;
     }
 
-    //  Get Orders By User ID
-    public List<Order> getOrdersByUserId(int userId) {
-        List<Order> orders = new ArrayList<>();
-        String sql = "SELECT id, user_id, status, created_on, updated_on FROM Order_Table WHERE user_id = ? ORDER BY created_on DESC";
 
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setInt(1, userId);
-            ResultSet rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                OrderStatus status = OrderStatus.fromString(rs.getString("status"));
-                if (status != null) {
-                    Order order = new Order(
-                            rs.getInt("id"),
-                            rs.getInt("user_id"),
-                            status,
-                            rs.getString("created_on"),
-                            rs.getString("updated_on")
-                    );
-                    orders.add(order);
-                }
-            }
-
-        } catch (SQLException e) {
-            System.out.println("ERROR: Failed to fetch orders by user.");
-            e.printStackTrace();
-        }
-
-        return orders;
-    }
 
     // Get Order Summaries By User (with total price)
-    public List<OrderSummaryDTO> getOrderSummariesByUserId(int userId) {
-        List<OrderSummaryDTO> summaries = new ArrayList<>();
+    public List<OrderSummaryDto> getOrderSummariesByUserId(int userId) {
+        List<OrderSummaryDto> summaries = new ArrayList<>();
 
         String sql = "SELECT o.id, o.user_id, o.status, o.created_on, " +
                 "       COALESCE(SUM(oi.price * oi.quantity), 0) AS total_price " +
@@ -124,7 +93,7 @@ public class OrderDao {
             while (rs.next()) {
                 OrderStatus status = OrderStatus.fromString(rs.getString("status"));
                 if (status != null) {
-                    OrderSummaryDTO summary = new OrderSummaryDTO(
+                    OrderSummaryDto summary = new OrderSummaryDto(
                             rs.getInt("id"),
                             rs.getInt("user_id"),
                             status,
@@ -174,8 +143,8 @@ public class OrderDao {
     }
 
     // Get Active Orders (for staff)
-    public List<OrderSummaryDTO> getActiveOrders() {
-        List<OrderSummaryDTO> summaries = new ArrayList<>();
+    public List<OrderSummaryDto> getActiveOrders() {
+        List<OrderSummaryDto> summaries = new ArrayList<>();
 
         String sql = "SELECT o.id, o.user_id, o.status, o.created_on, " +
                 "       COALESCE(SUM(oi.price * oi.quantity), 0) AS total_price " +
@@ -192,7 +161,7 @@ public class OrderDao {
             while (rs.next()) {
                 OrderStatus status = OrderStatus.fromString(rs.getString("status"));
                 if (status != null) {
-                    OrderSummaryDTO summary = new OrderSummaryDTO(
+                    OrderSummaryDto summary = new OrderSummaryDto(
                             rs.getInt("id"),
                             rs.getInt("user_id"),
                             status,
@@ -254,50 +223,6 @@ public class OrderDao {
         return 0.0;
     }
 
-    //  Delete Order (cascade delete items first)
-    public boolean deleteOrder(int orderId) {
-        String deleteItemsSql = "DELETE FROM Order_Items WHERE order_id = ?";
-        String deleteOrderSql = "DELETE FROM Order_Table WHERE id = ?";
 
-        try (Connection conn = DBConnection.getConnection()) {
 
-            // Delete items first
-            try (PreparedStatement pstmt = conn.prepareStatement(deleteItemsSql)) {
-                pstmt.setInt(1, orderId);
-                pstmt.executeUpdate();
-            }
-
-            // Then delete order
-            try (PreparedStatement pstmt = conn.prepareStatement(deleteOrderSql)) {
-                pstmt.setInt(1, orderId);
-                int rowsAffected = pstmt.executeUpdate();
-                return rowsAffected > 0;
-            }
-
-        } catch (SQLException e) {
-            System.out.println("ERROR: Failed to delete order.");
-            e.printStackTrace();
-        }
-
-        return false;
-    }
-    public boolean updateStatus(int orderId, OrderStatus currentStatus) {
-        String sql = "UPDATE Order_Table SET status = ?, updated_on = datetime('now') WHERE id = ?";
-
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setString(1, currentStatus.name());
-            pstmt.setInt(2, orderId);
-
-            int rowsAffected = pstmt.executeUpdate();
-            return rowsAffected > 0;
-
-        } catch (SQLException e) {
-            System.out.println("ERROR: Failed to update order status.");
-            e.printStackTrace();
-        }
-
-        return false;
-    }
 }

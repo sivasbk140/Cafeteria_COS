@@ -9,19 +9,6 @@ public class FoodMenuItemMap {
  private String createdOn;
  private String updatedOn;
 
- public FoodMenuItemMap() {
- }
-
- public FoodMenuItemMap(int id, int menuId, int foodItemId,
-                        boolean isAvailable,
-                        String createdOn, String updatedOn) {
-  this.id          = id;
-  this.menuId      = menuId;
-  this.foodItemId  = foodItemId;
-  this.isAvailable = isAvailable;
-  this.createdOn   = createdOn;
-  this.updatedOn   = updatedOn;
- }
 
 
 

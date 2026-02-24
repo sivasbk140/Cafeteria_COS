@@ -1,14 +1,14 @@
 package net.breezeware.order.service;
 
 import net.breezeware.food.dao.FoodItemDao;
-import net.breezeware.food.dto.FoodItemDTO;
+import net.breezeware.food.dto.FoodItemDto;
 import net.breezeware.order.dao.OrderDao;
 import net.breezeware.order.dao.OrderItemDao;
-import net.breezeware.order.dto.CartItemDTO;
-import net.breezeware.order.dto.OrderSummaryDTO;
+import net.breezeware.order.dto.CartItemDto;
+import net.breezeware.order.dto.OrderSummaryDto;
 import net.breezeware.order.entity.Order;
 import net.breezeware.order.entity.OrderItem;
-import net.breezeware.order.entity.OrderStatus;
+import net.breezeware.order.enumeration.OrderStatus;
 import net.breezeware.user.dao.DeliveryDetailDao;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class CustomerOrderService {
     private final FoodItemDao foodItemDao;
     private final DeliveryDetailDao deliveryDetailDao;
     private final Scanner scanner;
-    private final List<CartItemDTO> cart;
+    private final List<CartItemDto> cart;
     private final int currentUserId;
 
     public CustomerOrderService(int userId) {
@@ -49,7 +49,7 @@ public class CustomerOrderService {
             }
 
             // Find food item by name
-            FoodItemDTO foodItem = foodItemDao.getFoodItemByName(foodName);
+            FoodItemDto foodItem = foodItemDao.getFoodItemByName(foodName);
 
             if (foodItem == null) {
                 System.out.println(" Food item '" + foodName + "' not found. Please check spelling.");
@@ -78,7 +78,7 @@ public class CustomerOrderService {
             }
 
             // Check if item already in cart
-            CartItemDTO existingItem = findInCart(foodItem.getId());
+            CartItemDto existingItem = findInCart(foodItem.getId());
             if (existingItem != null) {
                 // Update quantity
                 int newQuantity = existingItem.getQuantity() + quantity;
@@ -91,7 +91,7 @@ public class CustomerOrderService {
                         newQuantity, existingItem.getFoodItemName(), existingItem.getTotalPrice());
             } else {
                 // Add new item to cart
-                CartItemDTO cartItem = new CartItemDTO(
+                CartItemDto cartItem = new CartItemDto(
                         foodItem.getId(),
                         foodItem.getName(),
                         foodItem.getPrice(),
@@ -132,7 +132,7 @@ public class CustomerOrderService {
         System.out.println("────────────────────────────────────────────────────────");
 
         int sno = 1;
-        for (CartItemDTO item : cart) {
+        for (CartItemDto item : cart) {
             System.out.printf("%-5d | %-20s | %-8d | ₹%-9.2f%n",
                     sno++, item.getFoodItemName(), item.getQuantity(), item.getTotalPrice());
         }
@@ -199,7 +199,7 @@ public class CustomerOrderService {
             return;
         }
 
-        CartItemDTO item = cart.get(sno - 1);
+        CartItemDto item = cart.get(sno - 1);
 
         System.out.println("\n1. Change Quantity");
         System.out.println("2. Remove Item");
@@ -227,7 +227,7 @@ public class CustomerOrderService {
                         System.out.println("✔ Quantity updated.");
                         viewCart();
                     } else {
-                        FoodItemDTO foodItem = foodItemDao.getFoodItemById(item.getFoodItemId());
+                        FoodItemDto foodItem = foodItemDao.getFoodItemById(item.getFoodItemId());
                         System.out.println(" Not enough stock. Available: " + foodItem.getQuantity());
                     }
                 } catch (NumberFormatException e) {
@@ -265,9 +265,9 @@ public class CustomerOrderService {
         }
 
         // Final stock check before placing order
-        for (CartItemDTO item : cart) {
+        for (CartItemDto item : cart) {
             if (!foodItemDao.hasEnoughStock(item.getFoodItemId(), item.getQuantity())) {
-                FoodItemDTO foodItem = foodItemDao.getFoodItemById(item.getFoodItemId());
+                FoodItemDto foodItem = foodItemDao.getFoodItemById(item.getFoodItemId());
                 System.out.println(" Stock changed! " + item.getFoodItemName() + " only has " + foodItem.getQuantity() + " left.");
                 System.out.println("Please update your cart.");
                 return;
@@ -308,7 +308,7 @@ public class CustomerOrderService {
         }
 
         // Add order items
-        for (CartItemDTO item : cart) {
+        for (CartItemDto item : cart) {
             orderItemDao.addOrderItem(orderId, item.getFoodItemId(), item.getPrice(), item.getQuantity());
             // Reduce stock
             foodItemDao.reduceStock(item.getFoodItemId(), item.getQuantity());
@@ -326,7 +326,7 @@ public class CustomerOrderService {
 
     //  View My Orders
     public void viewMyOrders() {
-        List<OrderSummaryDTO> orders = orderDao.getOrderSummariesByUserId(currentUserId);
+        List<OrderSummaryDto> orders = orderDao.getOrderSummariesByUserId(currentUserId);
 
         if (orders.isEmpty()) {
             System.out.println("\n No orders found.");
@@ -338,7 +338,7 @@ public class CustomerOrderService {
         System.out.printf("%-10s | %-20s | %-12s | %s%n", "Order ID", "Status", "Total", "Date");
         System.out.println("──────────────────────────────────────────────────────────────");
 
-        for (OrderSummaryDTO order : orders) {
+        for (OrderSummaryDto order : orders) {
             System.out.printf("%-10d | %-20s | ₹%-11.2f | %s%n",
                     order.getOrderId(),
                     order.getStatus(),
@@ -436,8 +436,8 @@ public class CustomerOrderService {
 
 
 
-    private CartItemDTO findInCart(int foodItemId) {
-        for (CartItemDTO item : cart) {
+    private CartItemDto findInCart(int foodItemId) {
+        for (CartItemDto item : cart) {
             if (item.getFoodItemId() == foodItemId) {
                 return item;
             }
@@ -447,7 +447,7 @@ public class CustomerOrderService {
 
     private double getCartTotal() {
         double total = 0;
-        for (CartItemDTO item : cart) {
+        for (CartItemDto item : cart) {
             total += item.getTotalPrice();
         }
         return total;

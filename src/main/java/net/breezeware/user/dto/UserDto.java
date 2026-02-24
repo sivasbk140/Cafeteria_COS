@@ -1,18 +1,17 @@
 package net.breezeware.user.dto;
 
-import net.breezeware.user.entity.Role;
+import net.breezeware.user.enumeration.Role;
 
-public class UserDTO {
+public class UserDto {
 
     private int id;
     private String name;
     private String email;
     private Role role;
 
-    public UserDTO() {
-    }
 
-    public UserDTO(int id, String name, String email, Role role) {
+
+    public UserDto(int id, String name, String email, Role role) {
         this.id    = id;
         this.name  = name;
         this.email = email;

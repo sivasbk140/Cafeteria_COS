@@ -1,8 +1,8 @@
 package net.breezeware.order.dto;
 
-import net.breezeware.order.entity.OrderStatus;
+import net.breezeware.order.enumeration.OrderStatus;
 
-public class OrderSummaryDTO {
+public class OrderSummaryDto {
 
     private int orderId;
     private int userId;
@@ -10,10 +10,9 @@ public class OrderSummaryDTO {
     private double totalPrice;
     private String createdOn;
 
-    public OrderSummaryDTO() {
-    }
 
-    public OrderSummaryDTO(int orderId, int userId, OrderStatus status,
+
+    public OrderSummaryDto(int orderId, int userId, OrderStatus status,
                            double totalPrice, String createdOn) {
         this.orderId    = orderId;
         this.userId     = userId;

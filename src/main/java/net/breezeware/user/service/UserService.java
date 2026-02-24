@@ -1,8 +1,8 @@
 package net.breezeware.user.service;
 
 import net.breezeware.user.dao.UserDao;
-import net.breezeware.user.dto.UserDTO;
-import net.breezeware.user.entity.Role;
+import net.breezeware.user.dto.UserDto;
+import net.breezeware.user.enumeration.Role;
 
 import java.util.Scanner;
 
@@ -45,14 +45,14 @@ public class UserService {
     }
 
     //  Login
-    public UserDTO login(Role expectedRole) {
+    public UserDto login(Role expectedRole) {
         System.out.print("\nEmail: ");
         String email = scanner.nextLine().trim();
 
         System.out.print("Password: ");
         String password = scanner.nextLine().trim();
 
-        UserDTO user = userDao.login(email, password, expectedRole);
+        UserDto user = userDao.login(email, password, expectedRole);
 
         if (user != null) {
             System.out.println("\n Login successful! Welcome, " + user.getName() + " (" + user.getRole() + ")");
@@ -64,7 +64,7 @@ public class UserService {
     }
 
     //  Login or Register Menu
-    public UserDTO loginOrRegister(Role role) {
+    public UserDto loginOrRegister(Role role) {
         while (true) {
             System.out.println("\n1. Login");
             System.out.println("2. Register");
@@ -74,7 +74,7 @@ public class UserService {
 
             switch (choice) {
                 case 1 -> {
-                    UserDTO user = login(role);
+                    UserDto user = login(role);
                     if (user != null) return user;
                 }
                 case 2 -> register(role);

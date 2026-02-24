@@ -108,65 +108,8 @@ public class OrderItemDao {
         return items;
     }
 
-    // Update Order Item Quantity
-    public boolean updateItemQuantity(int itemId, int newQuantity) {
-        String sql = "UPDATE Order_Items SET quantity = ?, updated_on = datetime('now') WHERE id = ?";
 
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setInt(1, newQuantity);
-            pstmt.setInt(2, itemId);
-
-            int rowsAffected = pstmt.executeUpdate();
-            return rowsAffected > 0;
-
-        } catch (SQLException e) {
-            System.out.println("ERROR: Failed to update order item quantity.");
-            e.printStackTrace();
-        }
-
-        return false;
-    }
-
-    //  Delete Order Item
-    public boolean deleteOrderItem(int itemId) {
-        String sql = "DELETE FROM Order_Items WHERE id = ?";
-
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setInt(1, itemId);
-
-            int rowsAffected = pstmt.executeUpdate();
-            return rowsAffected > 0;
-
-        } catch (SQLException e) {
-            System.out.println("ERROR: Failed to delete order item.");
-            e.printStackTrace();
-        }
-
-        return false;
-    }
-
-    //  Delete All Items For Order
-    public boolean deleteAllItemsForOrder(int orderId) {
-        String sql = "DELETE FROM Order_Items WHERE order_id = ?";
-
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setInt(1, orderId);
-            pstmt.executeUpdate();
-            return true;
-
-        } catch (SQLException e) {
-            System.out.println("ERROR: Failed to delete order items.");
-            e.printStackTrace();
-        }
-
-        return false;
-    }
 
     //  Helper Class for Items with Food Name
     public static class OrderItemWithName {

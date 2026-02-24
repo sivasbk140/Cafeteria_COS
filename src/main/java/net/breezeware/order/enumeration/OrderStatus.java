@@ -1,4 +1,4 @@
-package net.breezeware.order.entity;
+package net.breezeware.order.enumeration;
 
 public enum OrderStatus {
 

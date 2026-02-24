@@ -1,11 +1,11 @@
-package net.breezeware.app;
+package net.breezeware;
 
 import net.breezeware.food.service.AdminFoodService;
 import net.breezeware.food.service.CustomerFoodService;
 import net.breezeware.food.service.StaffFoodService;
 import net.breezeware.order.service.DeliveryStaffFoodService;
-import net.breezeware.user.dto.UserDTO;
-import net.breezeware.user.entity.Role;
+import net.breezeware.user.dto.UserDto;
+import net.breezeware.user.enumeration.Role;
 import net.breezeware.user.service.UserService;
 import net.breezeware.util.DBConnection;
 
@@ -27,7 +27,7 @@ public class CafeteriaApplication {
             return;
         }
 
-        UserDTO loggedInUser = userService.loginOrRegister(selectedRole);
+        UserDto loggedInUser = userService.loginOrRegister(selectedRole);
 
         if (loggedInUser == null) {
             System.out.println("Login/Registration failed. Exiting...");
@@ -113,20 +113,20 @@ public class CafeteriaApplication {
     }
 
 
-    private static void staffMenu(UserDTO user) {
+    private static void staffMenu(UserDto user) {
         StaffFoodService staffService = new StaffFoodService();
         staffService.showStaffMenu();
         System.out.println("\nLogging out..."); 
     }
 
 
-    private static void customerMenu(UserDTO user) {
+    private static void customerMenu(UserDto user) {
         CustomerFoodService customerService = new CustomerFoodService(user.getId());
         customerService.showCustomerMenu();
         System.out.println("\nLogging out...");
     }
 
-    private static void deliveryStaffMenu(UserDTO user)
+    private static void deliveryStaffMenu(UserDto user)
     {
         DeliveryStaffFoodService deliveryService = new DeliveryStaffFoodService();
         deliveryService.updateOrderStatus();

@@ -1,5 +1,7 @@
 package net.breezeware.user.entity;
 
+import net.breezeware.user.enumeration.Role;
+
 public class User {
 
     private int id;

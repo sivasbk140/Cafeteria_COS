@@ -2,9 +2,9 @@ package net.breezeware.order.service;
 
 import net.breezeware.order.dao.OrderDao;
 import net.breezeware.order.dao.OrderItemDao;
-import net.breezeware.order.dto.OrderSummaryDTO;
+import net.breezeware.order.dto.OrderSummaryDto;
 import net.breezeware.order.entity.Order;
-import net.breezeware.order.entity.OrderStatus;
+import net.breezeware.order.enumeration.OrderStatus;
 import net.breezeware.user.dao.DeliveryDetailDao;
 import net.breezeware.user.dao.UserDao;
 import net.breezeware.user.entity.DeliveryDetail;
@@ -31,7 +31,7 @@ public class StaffOrderService {
 
     //  View Active Orders
     public void viewActiveOrders() {
-        List<OrderSummaryDTO> orders = orderDao.getActiveOrders();
+        List<OrderSummaryDto> orders = orderDao.getActiveOrders();
 
         if (orders.isEmpty()) {
             System.out.println("\n No active orders.");
@@ -43,7 +43,7 @@ public class StaffOrderService {
         System.out.printf("%-10s | %-20s | %-12s | %s%n", "Order ID", "Status", "Total", "Date");
         System.out.println("────────────────────────────────────────────────────────────────────");
 
-        for (OrderSummaryDTO order : orders) {
+        for (OrderSummaryDto order : orders) {
             System.out.printf("%-10d | %-20s | ₹%-11.2f | %s%n",
                     order.getOrderId(),
                     order.getStatus(),

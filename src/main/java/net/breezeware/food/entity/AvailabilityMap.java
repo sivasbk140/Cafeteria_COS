@@ -1,5 +1,7 @@
 package net.breezeware.food.entity;
 
+import net.breezeware.food.enumeration.MenuDay;
+
 public class AvailabilityMap {
 
  private int id;

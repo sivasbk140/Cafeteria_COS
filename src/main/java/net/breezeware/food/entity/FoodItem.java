@@ -9,17 +9,8 @@ public class FoodItem {
      private int  quantity;
 
 
-     public FoodItem(int id, String name, double price, String category, String description, int quantity) {
-          this.id = id;
-          this.name = name;
-          this.price = price;
-          this.category = category;
-          this. quantity = quantity;
-          this.description = description;
-     }
 
 
-     public FoodItem() { }
 
 
      public int getId() { return id; }

@@ -10,8 +10,6 @@ public class DeliveryDetail {
     private String createdOn;
     private String updatedOn;
 
-    public DeliveryDetail() {
-    }
 
     public DeliveryDetail(int id, int userId, String email,
                           String phoneNumber, String location,

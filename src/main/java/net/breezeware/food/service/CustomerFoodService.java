@@ -1,8 +1,8 @@
 package net.breezeware.food.service;
 
 import net.breezeware.food.dao.CustomerMenuDao;
-import net.breezeware.food.dto.MenuViewDTO;
-import net.breezeware.food.entity.MenuDay;
+import net.breezeware.food.dto.MenuViewDto;
+import net.breezeware.food.enumeration.MenuDay;
 import net.breezeware.order.service.CustomerOrderService;
 
 import java.util.List;
@@ -97,7 +97,7 @@ public class CustomerFoodService extends FoodService {
 
     // View Full Menu
     private void viewFullMenu() {
-        List<MenuViewDTO> menuItems = customerMenuDao.getFullWeekMenu();
+        List<MenuViewDto> menuItems = customerMenuDao.getFullWeekMenu();
         displayMenu(menuItems);
     }
 
@@ -112,7 +112,7 @@ public class CustomerFoodService extends FoodService {
             return;
         }
 
-        List<MenuViewDTO> menuItems = customerMenuDao.getMenuByDay(day);
+        List<MenuViewDto> menuItems = customerMenuDao.getMenuByDay(day);
         displayMenu(menuItems);
     }
 }

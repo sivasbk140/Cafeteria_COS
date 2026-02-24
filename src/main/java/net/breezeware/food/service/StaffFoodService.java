@@ -1,7 +1,7 @@
 package net.breezeware.food.service;
 
 import net.breezeware.food.dao.CustomerMenuDao;
-import net.breezeware.food.dto.MenuViewDTO;
+import net.breezeware.food.dto.MenuViewDto;
 import net.breezeware.order.service.StaffOrderService;
 
 import java.util.List;
@@ -58,7 +58,7 @@ public class StaffFoodService extends FoodService {
     //  View Full Weekly Menu
     public void viewFullWeekMenu() {
         System.out.println("\n=== FULL WEEKLY MENU ===");
-        List<MenuViewDTO> menuItems = customerMenuDao.getFullWeekMenu();
+        List<MenuViewDto> menuItems = customerMenuDao.getFullWeekMenu();
         displayMenu(menuItems);
     }
 }

@@ -1,9 +1,9 @@
 package net.breezeware.food.service;
 
 import net.breezeware.food.dao.*;
-import net.breezeware.food.dto.FoodItemDTO;
-import net.breezeware.food.dto.MenuViewDTO;
-import net.breezeware.food.entity.MenuDay;
+import net.breezeware.food.dto.FoodItemDto;
+import net.breezeware.food.dto.MenuViewDto;
+import net.breezeware.food.enumeration.MenuDay;
 
 import java.util.List;
 import java.util.Scanner;
@@ -28,7 +28,7 @@ public class AdminFoodService extends FoodService {
 
 
     public void viewAllFoodItems() {
-        List<FoodItemDTO> items = foodItemDao.getAllFoodItems();
+        List<FoodItemDto> items = foodItemDao.getAllFoodItems();
 
         if (items.isEmpty()) {
             System.out.println("No food items found.");
@@ -41,7 +41,7 @@ public class AdminFoodService extends FoodService {
                 "ID", "Name", "Price", "Category", "Qty", "Description");
         System.out.println("────────────────────────────────────────────────────────────────────────────────");
 
-        for (FoodItemDTO item : items) {
+        for (FoodItemDto item : items) {
             System.out.printf("%-4d | %-20s | %-8s | %-15s | %-5d | %s%n",
                     item.getId(),
                     item.getName(),
@@ -55,7 +55,7 @@ public class AdminFoodService extends FoodService {
 
     //  View Menu By Day
     public void viewMenuByDay() {
-        System.out.print("\nEnter day (MONDAY/TUESDAY/.../SUNDAY): ");
+        System.out.print("\nEnter day (MONDAY/TUESDAY/.../ALLDAY): ");
         String dayInput = scanner.nextLine().trim();
 
         MenuDay day = MenuDay.fromString(dayInput);
@@ -64,7 +64,7 @@ public class AdminFoodService extends FoodService {
             return;
         }
 
-        List<MenuViewDTO> menuItems = customerMenuDao.getMenuByDay(day);
+        List<MenuViewDto> menuItems = customerMenuDao.getMenuByDay(day);
         displayMenu(menuItems);
     }
 
@@ -90,9 +90,9 @@ public class AdminFoodService extends FoodService {
         int id = foodItemDao.addFoodItem(name, price, quantity, category, description);
 
         if (id > 0) {
-            System.out.println("\n✔ Food item '" + name + "' added successfully! (ID: " + id + ")");
+            System.out.println("\n Food item '" + name + "' added successfully! (ID: " + id + ")");
         } else {
-            System.out.println("\n✘ Failed to add food item.");
+            System.out.println("\n Failed to add food item.");
         }
     }
 
@@ -103,9 +103,9 @@ public class AdminFoodService extends FoodService {
         System.out.print("Enter Food Item ID to update: ");
         int id = Integer.parseInt(scanner.nextLine().trim());
 
-        FoodItemDTO existing = foodItemDao.getFoodItemById(id);
+        FoodItemDto existing = foodItemDao.getFoodItemById(id);
         if (existing == null) {
-            System.out.println("✘ Food item not found.");
+            System.out.println(" Food item not found.");
             return;
         }
 
@@ -137,9 +137,9 @@ public class AdminFoodService extends FoodService {
         boolean success = foodItemDao.updateFoodItem(id, name, price, quantity, category, description);
 
         if (success) {
-            System.out.println("\n✔ Food item updated successfully!");
+            System.out.println("\n Food item updated successfully!");
         } else {
-            System.out.println("\n✘ Failed to update food item.");
+            System.out.println("\n Failed to update food item.");
         }
     }
 
@@ -150,13 +150,13 @@ public class AdminFoodService extends FoodService {
         System.out.print("Enter Food Item ID to delete: ");
         int id = Integer.parseInt(scanner.nextLine().trim());
 
-        FoodItemDTO item = foodItemDao.getFoodItemById(id);
+        FoodItemDto item = foodItemDao.getFoodItemById(id);
         if (item == null) {
-            System.out.println("✘ Food item not found.");
+            System.out.println(" Food item not found.");
             return;
         }
 
-        System.out.println("\n⚠ This will delete '" + item.getName() +
+        System.out.println("\n This will delete '" + item.getName() +
                 "' and remove it from all menus.");
         System.out.print("Confirm delete? (yes/no): ");
         String confirm = scanner.nextLine().trim();
@@ -169,9 +169,9 @@ public class AdminFoodService extends FoodService {
         boolean success = foodItemDao.deleteFoodItem(id);
 
         if (success) {
-            System.out.println("\n✔ Food item '" + item.getName() + "' deleted successfully.");
+            System.out.println("\n Food item '" + item.getName() + "' deleted successfully.");
         } else {
-            System.out.println("\n✘ Failed to delete food item.");
+            System.out.println("\n Failed to delete food item.");
         }
     }
 
@@ -202,15 +202,15 @@ public class AdminFoodService extends FoodService {
     }
 
     private void createMenu() {
-        System.out.print("\nCategory (BREAKFAST/LUNCH/DINNER): ");
+        System.out.print("\nCategory (BREAKFAST/LUNCH/DINNER/CHINESE/WESTERN/SOUTH_INDIAN/NORTH_INDIAN): ");
         String category = scanner.nextLine().trim().toUpperCase();
 
         int menuId = foodMenuDao.createMenu(category);
 
         if (menuId > 0) {
-            System.out.println("✔ Menu created! (Menu ID: " + menuId + ")");
+            System.out.println(" Menu created! (Menu ID: " + menuId + ")");
         } else {
-            System.out.println("✘ Failed to create menu.");
+            System.out.println(" Failed to create menu.");
         }
     }
 
@@ -224,9 +224,9 @@ public class AdminFoodService extends FoodService {
         boolean success = foodMenuItemMapDao.assignFoodItemToMenu(menuId, foodItemId);
 
         if (success) {
-            System.out.println("✔ Food item assigned to menu successfully!");
+            System.out.println(" Food item assigned to menu successfully!");
         } else {
-            System.out.println("✘ Failed to assign food item.");
+            System.out.println(" Failed to assign food item.");
         }
     }
 
@@ -240,9 +240,9 @@ public class AdminFoodService extends FoodService {
         boolean success = foodMenuItemMapDao.removeFoodItemFromMenu(menuId, foodItemId);
 
         if (success) {
-            System.out.println("✔ Food item removed from menu successfully!");
+            System.out.println(" Food item removed from menu successfully!");
         } else {
-            System.out.println("✘ Failed to remove food item.");
+            System.out.println(" Failed to remove food item.");
         }
     }
 
@@ -250,7 +250,7 @@ public class AdminFoodService extends FoodService {
         System.out.print("\nEnter Menu ID: ");
         int menuId = Integer.parseInt(scanner.nextLine().trim());
 
-        System.out.print("Enter Day (MONDAY/TUESDAY/.../SUNDAY): ");
+        System.out.print("Enter Day (MONDAY/TUESDAY/.../ALLDAY): ");
         String dayInput = scanner.nextLine().trim();
 
         MenuDay day = MenuDay.fromString(dayInput);
@@ -262,9 +262,9 @@ public class AdminFoodService extends FoodService {
         boolean success = availabilityMapDao.assignMenuToDay(menuId, day);
 
         if (success) {
-            System.out.println("✔ Menu assigned to " + day + " successfully!");
+            System.out.println(" Menu assigned to " + day + " successfully!");
         } else {
-            System.out.println("✘ Failed to assign menu to day.");
+            System.out.println(" Failed to assign menu to day.");
         }
     }
 
@@ -272,7 +272,7 @@ public class AdminFoodService extends FoodService {
         System.out.print("\nEnter Menu ID to delete: ");
         int menuId = Integer.parseInt(scanner.nextLine().trim());
 
-        System.out.print("⚠ This will remove all day assignments for this menu. Confirm? (yes/no): ");
+        System.out.print(" This will remove all day assignments for this menu. Confirm? (yes/no): ");
         String confirm = scanner.nextLine().trim();
 
         if (!confirm.equalsIgnoreCase("yes")) {
@@ -283,9 +283,9 @@ public class AdminFoodService extends FoodService {
         boolean success = foodMenuDao.deleteMenu(menuId);
 
         if (success) {
-            System.out.println("✔ Menu deleted successfully!");
+            System.out.println(" Menu deleted successfully!");
         } else {
-            System.out.println("✘ Failed to delete menu.");
+            System.out.println(" Failed to delete menu.");
         }
     }
 }

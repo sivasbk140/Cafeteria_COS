@@ -7,16 +7,6 @@ public class FoodMenu {
     private String createdOn;
     private String updatedOn;
 
-    public FoodMenu() {
-    }
-
-    public FoodMenu(int id, String category,
-                    String createdOn, String updatedOn) {
-        this.id        = id;
-        this.category  = category;
-        this.createdOn = createdOn;
-        this.updatedOn = updatedOn;
-    }
 
 
 

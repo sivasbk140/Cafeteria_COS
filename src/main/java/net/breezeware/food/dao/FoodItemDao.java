@@ -1,6 +1,6 @@
 package net.breezeware.food.dao;
 
-import net.breezeware.food.dto.FoodItemDTO;
+import net.breezeware.food.dto.FoodItemDto;
 import net.breezeware.util.DBConnection;
 
 import java.sql.*;
@@ -10,8 +10,8 @@ import java.util.List;
 public class FoodItemDao {
 
     // ─── Get All Food Items ──────────────────────────────────────
-    public List<FoodItemDTO> getAllFoodItems() {
-        List<FoodItemDTO> items = new ArrayList<>();
+    public List<FoodItemDto> getAllFoodItems() {
+        List<FoodItemDto> items = new ArrayList<>();
         String sql = "SELECT id, name, price, quantity, category, description FROM Food_Item";
 
         try (Connection conn = DBConnection.getConnection();
@@ -19,7 +19,7 @@ public class FoodItemDao {
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
-                FoodItemDTO dto = new FoodItemDTO(
+                FoodItemDto dto = new FoodItemDto(
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getDouble("price"),
@@ -39,7 +39,7 @@ public class FoodItemDao {
     }
 
     // ─── Get Food Item By ID ─────────────────────────────────────
-    public FoodItemDTO getFoodItemById(int id) {
+    public FoodItemDto getFoodItemById(int id) {
         String sql = "SELECT id, name, price, quantity, category, description FROM Food_Item WHERE id = ?";
 
         try (Connection conn = DBConnection.getConnection();
@@ -49,7 +49,7 @@ public class FoodItemDao {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                return new FoodItemDTO(
+                return new FoodItemDto(
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getDouble("price"),
@@ -156,35 +156,7 @@ public class FoodItemDao {
     }
 
 
-    public List<FoodItemDTO> getFoodItemsByCategory(String category) {
-        List<FoodItemDTO> items = new ArrayList<>();
-        String sql = "SELECT id, name, price, quantity, category, description FROM Food_Item WHERE category = ?";
 
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setString(1, category);
-            ResultSet rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                FoodItemDTO dto = new FoodItemDTO(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getDouble("price"),
-                        rs.getInt("quantity"),
-                        rs.getString("category"),
-                        rs.getString("description")
-                );
-                items.add(dto);
-            }
-
-        } catch (SQLException e) {
-            System.out.println("ERROR: Failed to fetch items by category.");
-            e.printStackTrace();
-        }
-
-        return items;
-    }
     // ─── Reduce Stock (called when order placed) ──────────────────
     public boolean reduceStock(int foodItemId, int quantity) {
         String sql = "UPDATE Food_Item SET quantity = quantity - ?, updated_on = datetime('now') WHERE id = ?";
@@ -251,7 +223,7 @@ public class FoodItemDao {
     }
 
     // ─── Get Food Item By Name (case-insensitive) ─────────────────
-    public FoodItemDTO getFoodItemByName(String name) {
+    public FoodItemDto getFoodItemByName(String name) {
         String sql = "SELECT id, name, price, quantity, category, description FROM Food_Item WHERE LOWER(name) = LOWER(?)";
 
         try (Connection conn = DBConnection.getConnection();
@@ -261,7 +233,7 @@ public class FoodItemDao {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                return new FoodItemDTO(
+                return new FoodItemDto(
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getDouble("price"),

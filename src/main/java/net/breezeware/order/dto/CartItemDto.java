@@ -1,16 +1,14 @@
 package net.breezeware.order.dto;
 
-public class CartItemDTO {
+public class CartItemDto {
 
     private int foodItemId;
     private String foodItemName;
     private double price;
     private int quantity;
 
-    public CartItemDTO() {
-    }
 
-    public CartItemDTO(int foodItemId, String foodItemName, double price, int quantity) {
+    public CartItemDto(int foodItemId, String foodItemName, double price, int quantity) {
         this.foodItemId   = foodItemId;
         this.foodItemName = foodItemName;
         this.price        = price;

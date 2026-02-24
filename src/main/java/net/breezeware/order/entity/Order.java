@@ -1,5 +1,7 @@
 package net.breezeware.order.entity;
 
+import net.breezeware.order.enumeration.OrderStatus;
+
 public class Order {
 
     private int id;

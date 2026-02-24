@@ -1,7 +1,7 @@
 package net.breezeware.user.dao;
 
-import net.breezeware.user.dto.UserDTO;
-import net.breezeware.user.entity.Role;
+import net.breezeware.user.dto.UserDto;
+import net.breezeware.user.enumeration.Role;
 import net.breezeware.user.entity.User;
 import net.breezeware.util.DBConnection;
 
@@ -40,7 +40,7 @@ public class UserDao {
     }
 
     //  Login (authenticate user)
-    public UserDTO login(String email, String password, Role expectedRole) {
+    public UserDto login(String email, String password, Role expectedRole) {
         String sql = "SELECT id, name, email, role FROM Users WHERE email = ? AND password = ? AND role = ?";
 
         try (Connection conn = DBConnection.getConnection();
@@ -53,7 +53,7 @@ public class UserDao {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                return new UserDTO(
+                return new UserDto(
                         rs.getInt("id"),
                         rs.getString("name"),
                         rs.getString("email"),
@@ -69,35 +69,7 @@ public class UserDao {
         return null;
     }
 
-    //  Get User By Email
-    public User getUserByEmail(String email) {
-        String sql = "SELECT id, name, email, password, role, created_on, updated_on FROM Users WHERE email = ?";
 
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setString(1, email);
-            ResultSet rs = pstmt.executeQuery();
-
-            if (rs.next()) {
-                return new User(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getString("password"),
-                        Role.fromString(rs.getString("role")),
-                        rs.getString("email"),
-                        rs.getString("created_on"),
-                        rs.getString("updated_on")
-                );
-            }
-
-        } catch (SQLException e) {
-            System.out.println("ERROR: Failed to fetch user by email.");
-            e.printStackTrace();
-        }
-
-        return null;
-    }
 
     //  Get User By ID
     public User getUserById(int id) {
@@ -129,48 +101,6 @@ public class UserDao {
         return null;
     }
 
-    // Update User
-    public boolean updateUser(int id, String name, String email, String password) {
-        String sql = "UPDATE Users SET name = ?, email = ?, password = ?, updated_on = datetime('now') WHERE id = ?";
-
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setString(1, name);
-            pstmt.setString(2, email);
-            pstmt.setString(3, password);
-            pstmt.setInt(4, id);
-
-            int rowsAffected = pstmt.executeUpdate();
-            return rowsAffected > 0;
-
-        } catch (SQLException e) {
-            System.out.println("ERROR: Failed to update user.");
-            e.printStackTrace();
-        }
-
-        return false;
-    }
-
-    //  Delete User
-    public boolean deleteUser(int id) {
-        String sql = "DELETE FROM Users WHERE id = ?";
-
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setInt(1, id);
-
-            int rowsAffected = pstmt.executeUpdate();
-            return rowsAffected > 0;
-
-        } catch (SQLException e) {
-            System.out.println("ERROR: Failed to delete user.");
-            e.printStackTrace();
-        }
-
-        return false;
-    }
 
     //  Check if Email Exists
     public boolean emailExists(String email) {
